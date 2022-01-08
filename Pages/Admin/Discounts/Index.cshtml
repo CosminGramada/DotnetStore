@@ -1,0 +1,67 @@
+@page
+@model DotnetStore.Pages.Admin.Discounts.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Admin/_Layout.cshtml";
+}
+
+<div id="shopify-section-collection-template" class="shopify-section">
+    <div id="collection-239139815586" class="collection">
+        <!-- Header -->
+        <div class="container overflow-hidden text-center mx-auto mb-5" style="max-width: 376px">
+            <!-- Heading -->
+            <h1 class="heading mb-3">
+                Discounts
+            </h1>
+            <a class="btn btn-primary w-100" type="button" asp-page="./Create" style="margin-top: 25px;">
+                Add a New Discount
+            </a>
+        </div>
+        <div class="container-lg">
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <form name="discount_form" id="discount_form">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th style="width: 10%;">Name</th>
+                                <th style="width: 17.5%;">Description</th>
+                                <th style="width: 12.5%;">Code</th>
+                                <th style="width: 10%;">Percent</th>
+                                <th style="width: 12.5%;">Type</th>
+                                <th style="width: 14.5%;">Start Date</th>
+                                <th style="width: 14.5%;">End Date</th>
+                                <th style="width: 8.5%;">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in @Model.Discounts)
+                            {
+                                <tr>
+                                    <td name="discount_id" style="display: none">@Html.DisplayFor(modelItem => item.Id)</td>
+                                    <td attr="discount_name">@Html.DisplayFor(modelItem => item.Name)</td>
+                                    <td attr="discount_description">@Html.DisplayFor(modelItem => item.Description)</td>
+                                    <td attr="discount_code">@Html.DisplayFor(modelItem => item.Code)</td>
+                                    <td attr="discount_percent">@Html.DisplayFor(modelItem => item.Percent)</td>
+                                    <td attr="discount_type_select">@Html.DisplayFor(modelItem => item.DiscountType.Name)</td>
+                                    <td attr="discount_start_date">@Html.DisplayFor(modelItem => item.StartDate)</td>
+                                    <td attr="discount_end_date">@Html.DisplayFor(modelItem => item.EndDate)</td>
+                                    <td>
+                                        <a class="edit" title="Edit" data-toggle="tooltip" href="/Admin/Discounts/Edit?id=@item.Id">
+                                            <i class="material-icons">&#xE254;</i>
+                                        </a>
+                                        <a class="delete" title="Delete" data-toggle="tooltip" href="/Admin/Discounts/Delete?id=@item.Id">
+                                            <i class="material-icons">&#xE872;</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

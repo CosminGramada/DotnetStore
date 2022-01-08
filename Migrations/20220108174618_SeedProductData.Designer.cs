@@ -3,6 +3,7 @@ using System;
 using DotnetStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DotnetStore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220108174618_SeedProductData")]
+    partial class SeedProductData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,70 +160,6 @@ namespace DotnetStore.Migrations
                     b.ToTable("Countries");
                 });
 
-            modelBuilder.Entity("DotnetStore.Models.Discount", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<Guid>("DiscountTypeId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("Percent")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DiscountTypeId");
-
-                    b.ToTable("Discounts");
-                });
-
-            modelBuilder.Entity("DotnetStore.Models.DiscountType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DiscountTypes");
-                });
-
             modelBuilder.Entity("DotnetStore.Models.ProductColor", b =>
                 {
                     b.Property<Guid>("Id")
@@ -241,6 +179,43 @@ namespace DotnetStore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductColors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("e90d27dd-6294-4a3f-b198-3f1b08f50a52"),
+                            CreatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090),
+                            Name = "Blue",
+                            UpdatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090)
+                        },
+                        new
+                        {
+                            Id = new Guid("894c4752-4df0-4afc-8a10-059fb1a6f829"),
+                            CreatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090),
+                            Name = "Black",
+                            UpdatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090)
+                        },
+                        new
+                        {
+                            Id = new Guid("1aefd651-111f-478b-addf-238b23877e7d"),
+                            CreatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090),
+                            Name = "Green",
+                            UpdatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090)
+                        },
+                        new
+                        {
+                            Id = new Guid("fe724679-27fe-4074-9e53-a6b008384e80"),
+                            CreatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090),
+                            Name = "Yellow",
+                            UpdatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090)
+                        },
+                        new
+                        {
+                            Id = new Guid("02f46f26-b512-4aee-a04b-eb0b60169b84"),
+                            CreatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090),
+                            Name = "Red",
+                            UpdatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090)
+                        });
                 });
 
             modelBuilder.Entity("DotnetStore.Models.ProductImage", b =>
@@ -262,6 +237,15 @@ namespace DotnetStore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductImages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("89c6d235-f7e5-44fd-a25c-c0a373212e87"),
+                            CreatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090),
+                            Name = "00000000-0000-0000-0000-000000000001.png",
+                            UpdatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090)
+                        });
                 });
 
             modelBuilder.Entity("DotnetStore.Models.ProductSize", b =>
@@ -283,6 +267,36 @@ namespace DotnetStore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductSizes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("bbaf06e1-593b-403f-ba2b-64828a788f26"),
+                            CreatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090),
+                            Name = "Small",
+                            UpdatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090)
+                        },
+                        new
+                        {
+                            Id = new Guid("ccd0a2f3-70b2-4f59-9194-f2f70ced34ee"),
+                            CreatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090),
+                            Name = "Medium",
+                            UpdatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090)
+                        },
+                        new
+                        {
+                            Id = new Guid("f08d874b-2d41-46f3-a61d-527383f4cca5"),
+                            CreatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090),
+                            Name = "Large",
+                            UpdatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090)
+                        },
+                        new
+                        {
+                            Id = new Guid("6b67888f-4a4d-4f72-b4de-abda56c3d3a6"),
+                            CreatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090),
+                            Name = "Extra Large",
+                            UpdatedAt = new DateTime(2022, 1, 8, 19, 46, 18, 297, DateTimeKind.Local).AddTicks(8090)
+                        });
                 });
 
             modelBuilder.Entity("DotnetStore.Models.UserAddress", b =>
@@ -440,17 +454,6 @@ namespace DotnetStore.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("DotnetStore.Models.Discount", b =>
-                {
-                    b.HasOne("DotnetStore.Models.DiscountType", "DiscountType")
-                        .WithMany()
-                        .HasForeignKey("DiscountTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DiscountType");
                 });
 
             modelBuilder.Entity("DotnetStore.Models.UserAddress", b =>

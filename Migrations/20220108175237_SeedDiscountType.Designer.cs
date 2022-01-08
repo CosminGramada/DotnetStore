@@ -3,6 +3,7 @@ using System;
 using DotnetStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DotnetStore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220108175237_SeedDiscountType")]
+    partial class SeedDiscountType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,49 +160,6 @@ namespace DotnetStore.Migrations
                     b.ToTable("Countries");
                 });
 
-            modelBuilder.Entity("DotnetStore.Models.Discount", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<Guid>("DiscountTypeId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("Percent")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DiscountTypeId");
-
-                    b.ToTable("Discounts");
-                });
-
             modelBuilder.Entity("DotnetStore.Models.DiscountType", b =>
                 {
                     b.Property<Guid>("Id")
@@ -220,6 +179,29 @@ namespace DotnetStore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DiscountTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("2679fb22-0777-42e1-9338-03fcefbb9070"),
+                            CreatedAt = new DateTime(2022, 1, 8, 19, 52, 37, 278, DateTimeKind.Local).AddTicks(5040),
+                            Name = "Product",
+                            UpdatedAt = new DateTime(2022, 1, 8, 19, 52, 37, 278, DateTimeKind.Local).AddTicks(5040)
+                        },
+                        new
+                        {
+                            Id = new Guid("1f4cbe59-3a92-4de0-b0cc-d58ae83ddf87"),
+                            CreatedAt = new DateTime(2022, 1, 8, 19, 52, 37, 278, DateTimeKind.Local).AddTicks(5040),
+                            Name = "Category",
+                            UpdatedAt = new DateTime(2022, 1, 8, 19, 52, 37, 278, DateTimeKind.Local).AddTicks(5040)
+                        },
+                        new
+                        {
+                            Id = new Guid("1a5c9cd1-bdec-4647-b826-07a3e2fa31ec"),
+                            CreatedAt = new DateTime(2022, 1, 8, 19, 52, 37, 278, DateTimeKind.Local).AddTicks(5040),
+                            Name = "Order",
+                            UpdatedAt = new DateTime(2022, 1, 8, 19, 52, 37, 278, DateTimeKind.Local).AddTicks(5040)
+                        });
                 });
 
             modelBuilder.Entity("DotnetStore.Models.ProductColor", b =>
@@ -440,17 +422,6 @@ namespace DotnetStore.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("DotnetStore.Models.Discount", b =>
-                {
-                    b.HasOne("DotnetStore.Models.DiscountType", "DiscountType")
-                        .WithMany()
-                        .HasForeignKey("DiscountTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DiscountType");
                 });
 
             modelBuilder.Entity("DotnetStore.Models.UserAddress", b =>

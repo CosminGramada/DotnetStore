@@ -1,14 +1,11 @@
-using System.ComponentModel.DataAnnotations;
+using Microsoft.Build.Framework;
 
 namespace DotnetStore.Models;
 
-public class Region
+public class DiscountType: BaseEntity
 {
     [Required]
     public Guid Id { get; set; }
-    
-    [Required]
-    public Guid CountryId { get; set; }
 
     [Required]
     public string Name { get; set; }

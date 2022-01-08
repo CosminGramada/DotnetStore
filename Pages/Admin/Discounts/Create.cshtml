@@ -1,0 +1,69 @@
+@page
+@model DotnetStore.Pages.Admin.Discounts.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Admin/_Layout.cshtml";
+}
+
+<div class="shopify-section">
+    <div class="collection">
+        <!-- Header -->
+        <div class="container overflow-hidden text-center mx-auto mb-5" style="max-width: 576px">
+            <!-- Heading -->
+            <h1 class="heading mb-3">
+                Add Discount
+            </h1>
+        </div>
+        <div class="container" style="max-width: 700px">
+            <!-- Add discount -->
+            <div id="add-discount" class="mb-6" style="max-width: 700px">
+                <div style="position: relative">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <input asp-for="Discount.Name" class="form-control" placeholder="Discount Name"/>
+                                <span asp-validation-for="Discount.Name" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12">
+                                <input asp-for="Discount.Description" class="form-control" placeholder="Discount Description"/>
+                                <span asp-validation-for="Discount.Description" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <input asp-for="Discount.Percent" class="form-control" placeholder="Percent"/>
+                                <span asp-validation-for="Discount.Percent" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <select asp-for="Discount.DiscountTypeId" class="form-select" asp-items="ViewBag.DiscountTypeId"></select>
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="Discount.Code" class="form-control" placeholder="Code"/>
+                                <span asp-validation-for="Discount.Code" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="Discount.StartDate" class="form-control"/>
+                                <span asp-validation-for="Discount.StartDate" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="Discount.EndDate" class="form-control"/>
+                                <span asp-validation-for="Discount.EndDate" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 60px;">
+                                <input class="btn btn-primary" name="submit" type="submit" value="Add discount">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <a asp-page="Index">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

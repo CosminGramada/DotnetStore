@@ -45,4 +45,10 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
 
     public DbSet<UserAddress> UserAddresses { get; set; }
     public DbSet<Country> Countries { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<ProductColor> ProductColors { get; set; }
+    public DbSet<ProductSize> ProductSizes { get; set; }
+    public DbSet<ProductImage> ProductImages { get; set; }
+    public DbSet<DiscountType> DiscountTypes { get; set; }
+    public DbSet<Discount> Discounts { get; set; }
 }
