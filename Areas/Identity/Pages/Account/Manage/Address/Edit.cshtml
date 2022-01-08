@@ -1,0 +1,72 @@
+@page
+@model DotnetStore.Areas.Identity.Pages.Account.Manage.Address.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+<hr/>
+<div class="container" style="max-width: 576px;">
+    <div id="add-address" class="mb-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserAddress.Id"/>
+            <input type="hidden" asp-for="UserAddress.UserId"/>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <input asp-for="UserAddress.FirstName" class="form-control" placeholder="First Name"/>
+                    <span asp-validation-for="UserAddress.FirstName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <input asp-for="UserAddress.LastName" class="form-control" placeholder="Last Name"/>
+                    <span asp-validation-for="UserAddress.LastName" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <input asp-for="UserAddress.Address1" class="form-control" placeholder="Address"/>
+                    <span asp-validation-for="UserAddress.Address1" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <input asp-for="UserAddress.Address2" class="form-control" placeholder="Apartment, suite, etc."/>
+                    <span asp-validation-for="UserAddress.Address2" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <input asp-for="UserAddress.City" class="form-control" placeholder="City"/>
+                    <span asp-validation-for="UserAddress.City" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <select asp-for="UserAddress.CountryId" class="form-select" asp-items="@Model.Countries">
+                        <option value="">-- Select Country --</option>
+                    </select>
+                    <span asp-validation-for="UserAddress.CountryId" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <input asp-for="UserAddress.Zip" class="form-control" placeholder="Postal Code"/>
+                    <span asp-validation-for="UserAddress.Zip" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <input asp-for="UserAddress.PhoneNumber" class="form-control" placeholder="Phone Number"/>
+                    <span asp-validation-for="UserAddress.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-check">
+                        <input class="form-check-input" asp-for="UserAddress.IsDefault"/>
+                        @Html.DisplayNameFor(model => model.UserAddress.IsDefault)
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <input class="btn btn-primary" type="submit" value="Save changes">
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

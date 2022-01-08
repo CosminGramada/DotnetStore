@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - DotnetStore</title>
+    <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"/>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true"/>
+</head>
+<body>
+<div id="shopify-section-navbar" class="shopify-section sticky-top">
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light shadow-sm navbar-sticky" style="background-color: #ffffff;">
+        <div class="container">
+            <!-- Navbar brand -->
+            <a id="navbar-brand" class="navbar-brand py-1 me-0 me-lg-3" href="/Index">
+                <img src="~/assets/logo.svg"
+                     width="126" height="30">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navbar icons nav -->
+            <div id="navbar-collapse" class="collapse navbar-collapse">
+                <!-- Navbar nav -->
+                <ul id="navbar-nav" class="navbar-nav my-2 my-lg-0 mx-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="catalog" class="nav-link dropdown-toggle text-dark" href="#" aria-current="" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Catalog
+                        </a>
+                        <ul class="dropdown-menu " aria-labelledby="catalog">
+                            <li>
+                                <a id="catalog-sale" class="dropdown-item text-dark" href="#">
+                                    Sale
+                                </a>
+                            </li>
+                            <div class="dropdown-divider"></div>
+                            <li>
+                                <a id="catalog-men" class="dropdown-item text-dark" href="{{ route('products.men') }}" aria-current="">
+                                    Men
+                                </a>
+                            </li>
+                            <li>
+                                <a id="catalog-women" class="dropdown-item text-dark" href="{{ route('products.women') }}" aria-current="">
+                                    Women
+                                </a>
+                            </li>
+                            <li>
+                                <a id="catalog-unisex" class="dropdown-item text-dark" href="{{ route('products.unisex') }}" aria-current="">
+                                    Unisex
+                                </a>
+                            </li>
+                            <div class="dropdown-divider"></div>
+                            <li>
+                                <a id="catalog-all" class="dropdown-item text-dark" href="{{ route('products.all') }}" aria-current="">
+                                    All products
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <partial name="_LoginPartial"/>
+            </div>
+        </div>
+    </nav>
+</div>
+<main id="main" role="main" class="pb-3">
+    @RenderBody()
+</main>
+
+<script src="~/lib/jquery/dist/jquery-3.6.0.min.js"></script>
+<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/index.var.js" asp-append-version="true"></script>
+<script src="~/js/theme.js" asp-append-version="true"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

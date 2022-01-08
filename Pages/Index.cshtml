@@ -1,0 +1,106 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div id="section" class="section">
+    <div id="carousel-wrapper" class=" mt-0 mb-8">
+        <!-- Carousel -->
+        <div id="carousel" class="carousel slide">
+            <div class="carousel-inner">
+                <img class="d-block w-100 object-fit-cover "
+                     src="~/assets/home.jpeg"
+                     alt="" width="1920" height="360" loading="lazy" style="min-height: 360px;">
+                <div class="carousel-caption">
+                    <h3 class="h3">
+                        DotnetStore - Modern, Fast and Simple
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="section-featured" class="section">
+    <section id="featured-collection" class="featured-collection pt-0 pb-0 mt-0 mb-6">
+        <div class="container-lg">
+            <div class="heading-wrapper mb-3 overflow-hidden">
+                <h2 class="heading mb-1 text-center h2">
+                    Featured collection
+                </h2>
+                <div class="subheading rte text-muted  text-center">
+                    <p>A list of featured products</p>
+                </div>
+            </div>
+            <ul class="items-grid list-unstyled row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3 row-cols-xxl-6 g-3 g-sm-3 g-xl-4">
+
+            </ul>
+        </div>
+    </section>
+</div>
+<div id="section-collection" class="section">
+    <section id="collection-list-161281990869fdf1c2" class="collection-list bg-light pt-8 pb-4 mt-0 mb-9">
+        <div class="container-lg">
+            <div class="heading-wrapper mb-3 overflow-hidden">
+                <h2 class="heading mb-1 text-center h2">
+                    Collection list
+                </h2>
+                <div class="subheading rte text-muted  text-center">
+                    <p>Browser through our collection of items.</p>
+                </div>
+            </div>
+            <!-- Collection list -->
+            <ul class="collection-list-grid list-unstyled row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-4 g-3 g-sm-3 g-xl-4">
+                <!-- Collection -->
+                <li class="collection-list-item pb-5 text-center col-4">
+                    <a class="d-block text-decoration-none" href="{{ route('products.women') }}">
+                        <!-- Collection Image -->
+                        <img class="collection-list-item-img img-fluid mb-3 img-thumbnail"
+                             src="~/assets/collection-women.png"
+                             alt="Women" width="480" height="480" loading="lazy">
+                        <!-- Collection title -->
+                        <h3 class="collection-list-item-title h6 mb-1" style="margin-top: auto;">
+                            <span>Women</span>
+                            <!-- Product count -->
+                            <small>
+                                (1)
+                            </small>
+                        </h3>
+                    </a>
+                </li>
+                <li class="collection-list-item pb-5 text-center col-4">
+                    <a class="d-block text-decoration-none" href="{{ route('products.men') }}">
+                        <!-- Collection Image -->
+                        <img class="collection-list-item-img img-fluid mb-3 img-thumbnail"
+                             src="~/assets/collection-men.png"
+                             alt="Men" width="480" height="480" loading="lazy">
+                        <!-- Collection title -->
+                        <h3 class="collection-list-item-title h6 mb-1" style="margin-top: auto;">
+                            <span>Men</span>
+                            <!-- Product count -->
+                            <small>
+                                (2)
+                            </small>
+                        </h3>
+                    </a>
+                </li>
+                <li class="collection-list-item pb-5 text-center col-4">
+                    <a class="d-block text-decoration-none" href="{{ route('products.unisex') }}">
+                        <!-- Collection Image -->
+                        <img class="collection-list-item-img img-fluid mb-3 img-thumbnail"
+                             src="~/assets/collection-unisex.png"
+                             alt="Children" width="480" height="480" loading="lazy">
+                        <!-- Collection title -->
+                        <h3 class="collection-list-item-title h6 mb-1" style="margin-top: auto;">
+                            <span>Unisex</span>
+                            <!-- Product count -->
+                            <small>
+                                (3)
+                            </small>
+                        </h3>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>

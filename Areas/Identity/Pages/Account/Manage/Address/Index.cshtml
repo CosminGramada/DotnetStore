@@ -1,0 +1,53 @@
+@page "/account/manage/addresses"
+@model DotnetStore.Areas.Identity.Pages.Account.Manage.Address.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    ViewData["ActivePage"] = ManageNavPages.Addresses;
+}
+
+<h4>User Addresses</h4>
+<hr/>
+<div class="container" style="max-width: 576px;">
+    <div id="add-address" class="mb-6">
+        <a class="btn btn-outline-primary w-100 active" type="button" asp-page="./Create">
+            Add a New Address
+        </a>
+    </div>
+    <ul id="addresses-list" class="list-unstyled">
+        @foreach (var item in Model.UserAddresses)
+        {
+            <li class="address card mb-4">
+                <div class="card-body text-center">
+                    @if (item.IsDefault)
+                    {
+                        <h3 class="h4 card-title">
+                            Default Address
+                        </h3>
+                    }
+                    <address class="mb-0">
+                        <p>
+                            @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
+                            <br>
+                            @Html.DisplayFor(modelItem => item.Address1)
+                            <br>
+                            @Html.DisplayFor(modelItem => item.Address2)
+                            <br>
+                            @Html.DisplayFor(modelItem => item.Zip) @Html.DisplayFor(modelItem => item.City)
+                            <br>
+                            @Html.DisplayFor(modelItem => item.Country.Name)
+                        </p>
+                    </address>
+                    <div class="mb-2">
+                        <a class="address-edit-btn btn btn-outline-primary btn-sm active" type="button" asp-page="./Edit" asp-route-id="@item.Id">
+                            Edit
+                        </a>
+                        <a class="btn btn-outline-danger btn-sm active" type="button" asp-page="./Delete" asp-route-id="@item.Id">
+                            Delete
+                        </a>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
