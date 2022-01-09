@@ -2,7 +2,6 @@
 using DotnetStore.Data;
 using DotnetStore.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotnetStore.Pages.Admin.Products
