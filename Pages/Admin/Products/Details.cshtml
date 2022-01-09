@@ -1,0 +1,190 @@
+@page
+@model DotnetStore.Pages.Admin.Products.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Admin/_Layout.cshtml";
+}
+
+<div id="shopify-section-product-template" class="shopify-section">
+    <article id="product-@Model.Product.Id" class="product mb-7">
+        <div class="product-container container-xl">
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- Product carousel -->
+                    <div id="product-carousel" class="product-carousel carousel sticky-top mb-4 carousel-dark slide"
+                         data-bs-ride="carousel" data-bs-pause="hover" data-bs-interval="false"
+                         aria-roledescription="carousel" aria-label="Image gallery"
+                         style="top: 76px; z-index: 1019;">
+
+                        <!-- Close button -->
+                        <button id="close-full-screen-btn" class="btn-close btn-close-white" aria-label="Close"
+                                title="Close">
+                        </button>
+
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators mb-3">
+                            <li data-bs-target="#product-carousel" data-bs-slide-to="0" class="active"></li>
+                            <li data-bs-target="#product-carousel" data-bs-slide-to="1" class=""></li>
+                            <li data-bs-target="#product-carousel" data-bs-slide-to="2" class=""></li>
+                            <li data-bs-target="#product-carousel" data-bs-slide-to="3" class=""></li>
+                            <li data-bs-target="#product-carousel" data-bs-slide-to="4" class=""></li>
+                        </ol>
+
+                        <div class="carousel-inner">
+                            <div class="carousel-item active" data-media-id="13725201137826" role="group"
+                                 aria-roledescription="slide" aria-label="1 From 5">
+                                <a href="~/images/@Model.Product.ProductImage.Name">
+                                    <img class="d-block img-fluid rounded"
+                                         src="~/images/@Model.Product.ProductImage.Name"
+                                         data-src="~/images/@Model.Product.ProductImage.Name"
+                                         width="680" height="680" loading="lazy">
+                                </a>
+                                <div class="carousel-caption">
+                                    <p class="h6 mb-0">
+                                        @Html.DisplayFor(model => Model.Product.Name)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <!-- Heading -->
+                    <h1 class="heading my-1 display-5">
+                        @Html.DisplayFor(model => Model.Product.Name)
+                    </h1>
+                    <!-- Price -->
+                    <p class="product-price lead">
+                        <s class="price-compare text-muted me-1 d-none">
+                            <span class="visually-hidden">
+                                Old price
+                            </span>
+                            <span class="price-compare-text">
+                            </span>
+                        </s>
+                        <span class="price">
+                            $@Html.DisplayFor(model => Model.Product.DiscountedPrice)
+                        </span>
+                    </p>
+                    <!-- Add to cart form -->
+                    <form id="add_to_cart" method="post" accept-charset="UTF-8" class="bg-light py-5 px-5 mb-6" enctype="multipart/form-data">
+                        <div class="option-select-wrapper js pb-2">
+                            <div class="mb-3">
+                                <label
+                                    class="input-group-text">
+                                    @Html.DisplayFor(model => Model.Product.Category.Name)
+                                    collection
+                                </label>
+                            </div>
+                        </div>
+                        <div class="option-select-wrapper js pb-2">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="option-select-color">
+                                    Color
+                                </label>
+                                <select id="option-select-color" class="option-select form-select" name="color">
+                                    <option value="" disabled selected>Select color</option>
+
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="option-select-size">
+                                    Size
+                                </label>
+                                <select id="option-select-size" class="option-select form-select" name="size">
+                                    <option value="" disabled selected>Select size</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="add-to-cart-btn-wrapper d-flex">
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                            <!-- Quantity field -->
+                            <input id="qty" type="number" class="form-control me-2" size="20" name="quantity"
+                                   value="1" min="1" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                   aria-label="Quantity" title="" style="max-width: 100px;"
+                                   data-bs-original-title="Quantity">
+                            <!-- Add to cart button -->
+                            <button class="add-to-cart-btn btn btn-primary btn-block d-flex align-items-center justify-content-center flex-grow-1" type="submit" disabled>
+                                <span class="add-to-cart-btn-icon-cart d-inline-flex">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21"
+                                         class="icon icon-cart me-2" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <circle cx="10" cy="20.5" r="1"></circle>
+                                        <circle cx="18" cy="20.5" r="1"></circle>
+                                        <path
+                                            d="M2.5 2.5h3l2.7 12.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6l1.6-8.4H7.1">
+                                        </path>
+                                    </svg>
+                                </span>
+                                @if (Model.Product.Quantity == 0)
+                                {
+                                    <span class="add-to-cart-btn-text">
+                                        Sold out
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="add-to-cart-btn-text">
+                                        Add to cart
+                                    </span>
+                                }
+                            </button>
+                        </div>
+                        <p class="taxes-shipping-notice text-muted fst-italic text-center small mt-3 mb-n1">
+                            Taxes &amp; Shipping calculated at checkout
+                        </p>
+                    </form>
+
+                    <!-- Product accordion -->
+                    <div id="product-accordion" class="product-accordion accordion mb-5 ">
+                        <div class="accordion-item">
+                            <h3 id="product-accordion-heading-c41691ac-33a6-4af2-bb81-259ccfdd8e32"
+                                class="accordion-header mb-0">
+                                <button class="accordion-button " type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#product-accordion-collapse-c41691ac-33a6-4af2-bb81-259ccfdd8e32"
+                                        aria-expanded="true"
+                                        aria-controls="product-accordion-collapse-c41691ac-33a6-4af2-bb81-259ccfdd8e32">
+                                    Details
+                                </button>
+                            </h3>
+                            <div id="product-accordion-collapse-c41691ac-33a6-4af2-bb81-259ccfdd8e32"
+                                 class="accordion-collapse collapse show" data-bs-parent="#product-accordion"
+                                 aria-labelledby="product-accordion-heading-c41691ac-33a6-4af2-bb81-259ccfdd8e32">
+                                <div class="accordion-body">
+                                    <div class="rte">
+                                        <p>
+                                            <span>
+                                                @Html.DisplayFor(m => Model.Product.Description)
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+<div id="section-featured" class="section">
+    <section id="featured-collection" class="featured-collection pt-0 pb-0 mt-0 mb-6">
+        <div class="container-lg">
+            <div class="heading-wrapper mb-3 overflow-hidden">
+                <h2 class="heading mb-1 text-center h2">
+                    Similar products
+                </h2>
+                <div class="subheading rte text-muted  text-center">
+                    <p></p>
+                </div>
+            </div>
+            <ul class="items-grid list-unstyled row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3 row-cols-xxl-6 g-3 g-sm-3 g-xl-4">
+
+            </ul>
+        </div>
+    </section>
+</div>

@@ -3,6 +3,7 @@ using System;
 using DotnetStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DotnetStore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220108213111_AddProductVariant")]
+    partial class AddProductVariant
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,29 +143,6 @@ namespace DotnetStore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("e026a1b8-8154-4627-b064-a914880f4fc9"),
-                            CreatedAt = new DateTime(2022, 1, 8, 23, 49, 28, 814, DateTimeKind.Local).AddTicks(6040),
-                            Name = "Women",
-                            UpdatedAt = new DateTime(2022, 1, 8, 23, 49, 28, 814, DateTimeKind.Local).AddTicks(6040)
-                        },
-                        new
-                        {
-                            Id = new Guid("5b4c5fd0-7004-457a-b833-136b56eafd74"),
-                            CreatedAt = new DateTime(2022, 1, 8, 23, 49, 28, 814, DateTimeKind.Local).AddTicks(6040),
-                            Name = "Men",
-                            UpdatedAt = new DateTime(2022, 1, 8, 23, 49, 28, 814, DateTimeKind.Local).AddTicks(6040)
-                        },
-                        new
-                        {
-                            Id = new Guid("445fc913-87c3-4ca4-93de-1cd342d30f8c"),
-                            CreatedAt = new DateTime(2022, 1, 8, 23, 49, 28, 814, DateTimeKind.Local).AddTicks(6040),
-                            Name = "Unisex",
-                            UpdatedAt = new DateTime(2022, 1, 8, 23, 49, 28, 814, DateTimeKind.Local).AddTicks(6040)
-                        });
                 });
 
             modelBuilder.Entity("DotnetStore.Models.Country", b =>

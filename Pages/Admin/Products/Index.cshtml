@@ -1,0 +1,93 @@
+@page
+@using DotnetStore.Models
+@model DotnetStore.Pages.Admin.Products.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Admin/_Layout.cshtml";
+}
+
+<div class="shopify-section">
+    <div class="collection">
+        <!-- Header -->
+        <div class="container overflow-hidden text-center mx-auto mb-5" style="max-width: 376px">
+            <!-- Heading -->
+            <h1 class="heading mb-3">
+                Products
+            </h1>
+            <a id="add_new_product" class="btn btn-primary w-100 active" type="button" asp-page="./Create"
+               style="margin-top: 25px;">
+                Add a New Product
+            </a>
+        </div>
+        <div class="container-lg">
+            <ul class="items-grid list-unstyled row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3 row-cols-xxl-6 g-3 g-sm-3 g-xl-4">
+                @foreach (var item in @Model.Products)
+                {
+                    <li class="product-item col pb-5 text-center">
+                        <!-- Product Image -->
+                        <a class="product-image d-block text-decoration-none" href="/Admin/Products/Details?id=@item.Id">
+                            <img class="product-item-img img-fluid mb-0 img-thumbnail"
+                                 src="~/images/@item.ProductImage.Name"
+                                 width="480" height="480" loading="lazy"
+                                 style="min-width: 180px; min-height: 180px; max-width: 180px; max-height: 180px;" alt="">
+
+                            <a class="edit" title="Edit" data-toggle="tooltip"
+                               href="/Admin/Products/Edit?id=@item.Id"
+                               style="margin-top: 10px;">
+                                <i class="material-icons">&#xE254;</i>
+                            </a>
+                            <a class="delete" title="Delete" data-toggle="tooltip"
+                               href="/Admin/Products/Delete?id=@item.Id">
+                                <i class="material-icons">&#xE872;</i>
+                            </a>
+
+                            <h3 class="product-item-title h5 mb-1" style="margin-top: 1rem;">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </h3>
+                            @if (item.Quantity == 0)
+                            {
+                                <p class="product-item-price mb-1">
+                                    <span class="price">
+                                        $@Html.DisplayFor(modelItem => item.Price)
+                                    </span>
+                                </p>
+                                <span class="badge-sold-out badge text-uppercase">
+                                    Sold Out
+                                </span>
+                            }
+                            else if (item.Price == item.DiscountedPrice)
+                            {
+                                <p class="product-item-price mb-1">
+                                    <s class="price-compare text-muted me-1">
+                                        <span class="visually-hidden">
+                                            Old price
+                                        </span>
+                                        $@Html.DisplayFor(modelItem => item.Price)
+                                    </s>
+                                    <span class="price">
+                                        $@Html.DisplayFor(modelItem => item.DiscountedPrice)
+                                    </span>
+                                </p>
+                                <span class="badge-sale badge text-uppercase">
+                                    <span class="visually-hidden">
+                                        Discount:
+                                    </span>
+                                    Sale
+                                </span>
+                            }
+                            else
+                            {
+                                <p class="product-item-price mb-1">
+                                    <span class="price">
+                                        $@Html.DisplayFor(modelItem => item.Price)
+                                    </span>
+                                </p>
+                            }
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+@page
+@model DotnetStore.Pages.Admin.Products.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Admin/_Layout.cshtml";
+}
+
+<div class="shopify-section">
+    <div class="collection">
+        <!-- Header -->
+        <div class="container overflow-hidden text-center mx-auto mb-5" style="max-width: 576px">
+            <!-- Heading -->
+            <h1 class="heading mb-3">
+                Add Product
+            </h1>
+        </div>
+        <div class="container" style="max-width: 700px">
+            <!-- Add product -->
+            <div id="add-product" class="mb-6" style="max-width: 700px">
+                <div id="add-product-collapse" style="position: relative">
+                    <div class="carousel-inner visually-hidden">
+                        <div class="carousel-item active">
+                            <img id="product_image" class="d-block img-fluid rounded"
+                                 src="~/images/00000000-0000-0000-0000-000000000001.png"
+                                 width="170" height="170" loading="lazy"
+                                 style="margin-left: auto; margin-right: auto; margin-bottom: 15px;">
+                        </div>
+                    </div>
+                    <form method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <input asp-for="Product.Name" class="form-control" placeholder="Product Name"/>
+                                <span asp-validation-for="Product.Name" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12">
+                                <textarea asp-for="Product.Description" class="form-control" placeholder="Product Description"></textarea>
+                                <span asp-validation-for="Product.Description" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-12">
+                                <select asp-for="Product.CategoryId" class="form-select" asp-items="ViewBag.CategoryId"></select>
+                            </div>
+                            <div class="col-md-3" id="add_variant">
+                                <input class="btn btn-primary active" type="button" value="Add variant">
+                            </div>
+                            <div class="col-md-9" id="add_variant_divider"></div>
+
+                            <div class="col-md-6">
+                                <input asp-for="Product.Price" class="form-control" placeholder="Price"/>
+                                <span asp-validation-for="Product.Price" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <select asp-for="Product.DiscountId" class="form-select" asp-items="ViewBag.DiscountId">
+                                    <option value="">Select discount</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <input asp-for="Product.ImageFile" class="form-control" type="file"
+                                       placeholder="Upload product image">
+                            </div>
+                            <div class="col-md-12" style="margin-top: 60px;">
+                                <input class="btn btn-primary active" id="save_changes" name="submit" type="submit"
+                                       value="Save changes">
+                            </div>
+                        </div>
+                    </form>
+                    @* <form id="upload_form_new" *@
+                    @*       accept-charset="UTF-8" *@
+                    @*       class="address-form pt-4" data-form-id="new" enctype="multipart/form-data" *@
+                    @*       style="position: absolute; bottom: 50px; width: 100%;" method="post"> *@
+                    @*     <div class="row g-3"> *@
+                    @*         <div class="col-md-9"> *@
+                    @*             <input asp-for="Product.ImageFile" class="form-control" type="file" *@
+                    @*                    placeholder="Upload product image"> *@
+                    @*         </div> *@
+                    @*         <div class="col-md-3 text-right"> *@
+                    @*             <input class="btn btn-primary active" type="submit" value="Upload image"> *@
+                    @*         </div> *@
+                    @*     </div> *@
+                    @* </form> *@
+                </div>
+            </div>
+
+            <div>
+                <a asp-page="Index">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

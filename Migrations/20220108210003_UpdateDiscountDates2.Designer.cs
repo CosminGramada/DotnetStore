@@ -3,6 +3,7 @@ using System;
 using DotnetStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DotnetStore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220108210003_UpdateDiscountDates2")]
+    partial class UpdateDiscountDates2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,29 +143,6 @@ namespace DotnetStore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("e026a1b8-8154-4627-b064-a914880f4fc9"),
-                            CreatedAt = new DateTime(2022, 1, 8, 23, 49, 28, 814, DateTimeKind.Local).AddTicks(6040),
-                            Name = "Women",
-                            UpdatedAt = new DateTime(2022, 1, 8, 23, 49, 28, 814, DateTimeKind.Local).AddTicks(6040)
-                        },
-                        new
-                        {
-                            Id = new Guid("5b4c5fd0-7004-457a-b833-136b56eafd74"),
-                            CreatedAt = new DateTime(2022, 1, 8, 23, 49, 28, 814, DateTimeKind.Local).AddTicks(6040),
-                            Name = "Men",
-                            UpdatedAt = new DateTime(2022, 1, 8, 23, 49, 28, 814, DateTimeKind.Local).AddTicks(6040)
-                        },
-                        new
-                        {
-                            Id = new Guid("445fc913-87c3-4ca4-93de-1cd342d30f8c"),
-                            CreatedAt = new DateTime(2022, 1, 8, 23, 49, 28, 814, DateTimeKind.Local).AddTicks(6040),
-                            Name = "Unisex",
-                            UpdatedAt = new DateTime(2022, 1, 8, 23, 49, 28, 814, DateTimeKind.Local).AddTicks(6040)
-                        });
                 });
 
             modelBuilder.Entity("DotnetStore.Models.Country", b =>
@@ -243,48 +222,6 @@ namespace DotnetStore.Migrations
                     b.ToTable("DiscountTypes");
                 });
 
-            modelBuilder.Entity("DotnetStore.Models.Product", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext");
-
-                    b.Property<Guid?>("DiscountId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.Property<Guid?>("ProductImageId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("DiscountId");
-
-                    b.HasIndex("ProductImageId");
-
-                    b.ToTable("Products");
-                });
-
             modelBuilder.Entity("DotnetStore.Models.ProductColor", b =>
                 {
                     b.Property<Guid>("Id")
@@ -346,41 +283,6 @@ namespace DotnetStore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductSizes");
-                });
-
-            modelBuilder.Entity("DotnetStore.Models.ProductVariant", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<Guid>("ProductColorId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("ProductSizeId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductColorId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("ProductSizeId");
-
-                    b.ToTable("ProductVariants");
                 });
 
             modelBuilder.Entity("DotnetStore.Models.UserAddress", b =>
@@ -549,56 +451,6 @@ namespace DotnetStore.Migrations
                         .IsRequired();
 
                     b.Navigation("DiscountType");
-                });
-
-            modelBuilder.Entity("DotnetStore.Models.Product", b =>
-                {
-                    b.HasOne("DotnetStore.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DotnetStore.Models.Discount", "Discount")
-                        .WithMany()
-                        .HasForeignKey("DiscountId");
-
-                    b.HasOne("DotnetStore.Models.ProductImage", "ProductImage")
-                        .WithMany()
-                        .HasForeignKey("ProductImageId");
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Discount");
-
-                    b.Navigation("ProductImage");
-                });
-
-            modelBuilder.Entity("DotnetStore.Models.ProductVariant", b =>
-                {
-                    b.HasOne("DotnetStore.Models.ProductColor", "ProductColor")
-                        .WithMany()
-                        .HasForeignKey("ProductColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DotnetStore.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DotnetStore.Models.ProductSize", "ProductSize")
-                        .WithMany()
-                        .HasForeignKey("ProductSizeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("ProductColor");
-
-                    b.Navigation("ProductSize");
                 });
 
             modelBuilder.Entity("DotnetStore.Models.UserAddress", b =>

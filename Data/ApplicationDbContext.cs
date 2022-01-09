@@ -27,7 +27,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
         foreach (var entityEntry in entries)
         {
             var timestamp = DateTime.Now;
-            ((BaseEntity)entityEntry.Entity).UpdatedAt = timestamp;
+            ((BaseEntity) entityEntry.Entity).UpdatedAt = timestamp;
 
             if (entityEntry.State == EntityState.Added)
             {
@@ -51,4 +51,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<ProductImage> ProductImages { get; set; }
     public DbSet<DiscountType> DiscountTypes { get; set; }
     public DbSet<Discount> Discounts { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<ProductVariant> ProductVariants { get; set; }
 }

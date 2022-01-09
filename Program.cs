@@ -9,7 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DotnetStoreContext");
 builder.Services.AddDbContext<DotnetStoreIdentityDbContext>(options =>
-    options.UseSqlServer(connectionString));var serverVersion = new MySqlServerVersion(new Version(5, 7, 34));
+    options.UseSqlServer(connectionString));
+var serverVersion = new MySqlServerVersion(new Version(5, 7, 34));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, serverVersion));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -20,7 +21,7 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options => option
     .AddDefaultTokenProviders();
 
 builder.Services.AddRazorPages();
-builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation(); 
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 
 var app = builder.Build();
@@ -44,6 +45,11 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "UploadImage",
+    pattern: "{controller=Upload}/{action=UploadImage}"
+);
 
 app.MapRazorPages();
 

@@ -82,6 +82,10 @@
 <script src="~/js/index.var.js" asp-append-version="true"></script>
 <script src="~/js/theme.js" asp-append-version="true"></script>
 <script src="~/js/table.js" asp-append-version="true"></script>
+<script>
+    const awn = new AWN();
+    awn.success("Success");
+</script>
 
 @await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -74,7 +74,7 @@ $(function () {
 
         $.ajax({
             type: 'POST',
-            url: $(this).attr('action'),
+            url: '/Upload/UploadImage',
             data: formData,
             cache: false,
             contentType: false,
