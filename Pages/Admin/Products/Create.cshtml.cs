@@ -2,7 +2,6 @@
 using DotnetStore.Data;
 using DotnetStore.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DotnetStore.Pages.Admin.Products
@@ -22,16 +21,19 @@ namespace DotnetStore.Pages.Admin.Products
             return Page();
         }
 
-        [BindProperty] public Product Product { get; set; }
+        [BindProperty] 
+        public Product Product { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
+            
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
+            Product.Id = Guid.NewGuid();
             if (Product.ImageFile != null)
             {
                 Product.ProductImageId = await UploadImage(Product);
@@ -43,6 +45,8 @@ namespace DotnetStore.Pages.Admin.Products
             
             _context.Products.Add(Product);
             await _context.SaveChangesAsync();
+            
+            await SaveProductVariantAsync(Product.Id);
 
             return RedirectToPage("./Index");
         }

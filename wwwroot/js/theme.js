@@ -68,29 +68,6 @@ $(function () {
             });
     });
 
-    $('#upload_form_new').on('submit', (function (e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-
-        $.ajax({
-            type: 'POST',
-            url: '/Upload/UploadImage',
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                $('#product_image').attr('src', `/images/uploads/${data.name}`);
-                $('div.carousel-inner').removeClass('visually-hidden');
-                $('input[name="image_id"]').attr('value', data.id);
-                awn.success('Image uploaded successfully.');
-            },
-            error: function (data) {
-                awn.alert(data.responseJSON.message);
-            }
-        });
-    }));
-
     //Admin - product variant add / update
     $('#add_variant').on('click', function () {
         const rows = $('div[role="row"]');
@@ -117,7 +94,7 @@ $(function () {
         const baseUrl = document.location.origin;
         const token = $('meta[name="csrf-token"]').attr('content');
 
-        $('#price').closest('div').before(
+        $('#Product_Price').closest('div').before(
             `<div role="row" style="display: flex;flex-direction: row;">
                 <div class="col-md-3"></div>
                 <div class="col-md-3">
@@ -129,7 +106,7 @@ $(function () {
                     </select>
                 </div>
                 <div class="col-md-3" style="display: flex;flex-direction: row;align-items: center;">
-                    <input class="form-control" type="text" name="quantity_${elems + 1}"
+                    <input asp-for="ProductVariant.Quantity" class="form-control" type="text" name="quantity_${elems + 1}"
                            value="" placeholder="Quantity" required>
                         <a type="button" class="delete" title="Delete" data-toggle="tooltip" style="margin-right: -100px;">
                             <i class="material-icons" style="color: #E34724; cursor: pointer;">&#xE872;</i>
@@ -143,7 +120,7 @@ $(function () {
         let productSizes = $(`[name="product_size_${elems + 1}"]`);
 
         $.ajax({
-            url: baseUrl + "/api/product_sizes",
+            url: baseUrl + "/Product/GetSizes",
             type: "GET",
             data: {
                 _token: token
@@ -163,7 +140,7 @@ $(function () {
         });
 
         $.ajax({
-            url: baseUrl + "/api/product_colors",
+            url: baseUrl + "/Product/GetColors",
             type: "GET",
             data: {
                 _token: token
@@ -223,25 +200,23 @@ $(function () {
         const color = $('#option-select-color').val()?.trim();
         const size = $('#option-select-size').val()?.trim();
         const addButton = $('.add-to-cart-btn');
-        const product_id = $('input[name="product_id"]').val();
-        const token = $('meta[name="csrf-token"]').attr('content');
+        const product_id = $('#Product_Id').val();
 
         if (color.toLowerCase() !== 'select color' && size.toLowerCase() !== 'select size') {
             addButton.prop('disabled', false);
         }
 
         $.ajax({
-            url: '/api/product-variant',
+            url: `/Product/GetProductVariantQuantity?productId=${product_id}&colorId=${color}&sizeId=${size}`,
             type: "GET",
             data: {
-                _token: token,
-                color_id: color,
-                size_id: size,
-                product_id: product_id
+                colorId: color,
+                sizeId: size,
+                productId: product_id
             },
             dataType: 'json',
             success: function (data) {
-                if (data.variants.quantity == 0) {
+                if (data == 0) {
                     addButton.prop('disabled', true);
                     addButton.html('Unavailable');
                 }
@@ -260,7 +235,7 @@ $(function () {
     $('#add_to_cart #option-select-color').on('change', function (e) {
         const token = $('meta[name="csrf-token"]').attr('content');
 
-        const product_id = $('input[name="product_id"]').val();
+        const product_id = $('#Product_Id').val();
         const color_id = $(this).val();
 
         const data = {
@@ -270,7 +245,7 @@ $(function () {
         }
 
         $.ajax({
-            url: `/api/product_sizes/${color_id}`,
+            url: `/Product/GetProductSizes?productId=${product_id}&colorId=${color_id}`,
             type: "GET",
             cache: false,
             data: data,

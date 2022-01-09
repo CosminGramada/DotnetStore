@@ -47,8 +47,23 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "UploadImage",
-    pattern: "{controller=Upload}/{action=UploadImage}"
+    name: "GetColors",
+    pattern: "{controller=Product}/{action=GetColors}"
+);
+
+app.MapControllerRoute(
+    name: "GetSizes",
+    pattern: "{controller=Product}/{action=GetSizes}"
+);
+
+app.MapControllerRoute(
+    name: "GetProductColors",
+    pattern: "{controller=Product}/{action=GetProductColors}"
+);
+
+app.MapControllerRoute(
+    name: "GetProductSizes",
+    pattern: "{controller=Product}/{action=GetProductSizes}"
 );
 
 app.MapRazorPages();

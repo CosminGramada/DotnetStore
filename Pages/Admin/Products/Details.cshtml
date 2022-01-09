@@ -84,9 +84,8 @@
                                 <label class="input-group-text" for="option-select-color">
                                     Color
                                 </label>
-                                <select id="option-select-color" class="option-select form-select" name="color">
+                                <select id="option-select-color" class="option-select form-select" name="color" asp-items="@Model.AvailableProductColors">
                                     <option value="" disabled selected>Select color</option>
-
                                 </select>
                             </div>
                             <div class="input-group mb-3">
@@ -99,7 +98,7 @@
                             </div>
                         </div>
                         <div class="add-to-cart-btn-wrapper d-flex">
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="hidden" asp-for="Product.Id">
 
                             <!-- Quantity field -->
                             <input id="qty" type="number" class="form-control me-2" size="20" name="quantity"

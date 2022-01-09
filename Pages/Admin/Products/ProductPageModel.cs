@@ -54,4 +54,26 @@ public class ProductPageModel: PageModel
     {
         return product.Price - 0.1M;
     }
+
+    protected async Task SaveProductVariantAsync(Guid productId)
+    {
+        foreach (var item in Request.Form)
+        {
+            if (item.Key.StartsWith("product_color"))
+            {
+                var index = item.Key.Substring(item.Key.LastIndexOf("_") + 1);
+                
+                var productVariant = new ProductVariant
+                {
+                    ProductId = productId,
+                    ProductColorId = Guid.Parse(item.Value),
+                    ProductSizeId = Guid.Parse(Request.Form[$"product_size_{index}"]),
+                    Quantity = Convert.ToInt32(Request.Form[$"quantity_{index}"])
+                };
+
+                _context.ProductVariants.Add(productVariant);
+                await _context.SaveChangesAsync();
+            }
+        }
+    }
 }
