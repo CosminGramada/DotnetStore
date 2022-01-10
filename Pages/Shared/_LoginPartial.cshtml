@@ -3,74 +3,78 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<ul id="navbar-icons-nav" class="navbar-nav align-items-center">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <li class="nav-item d-none d-lg-block">
-            <p id="user-name" class="text-center" style="white-space: nowrap; display: contents;">
-                Hi,
-                <strong>@User.Identity?.Name!</strong>
-            </p>
-        </li>
-    }
-    <li id="search-nav-item" class="nav-item dropdown">
-        <a id="search-nav-link" class="nav-link d-flex text-dark" href="#" data-bs-toggle="dropdown"
-           role="button">
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item d-none d-lg-block">
+        <p id="user-name" class="text-center" style="white-space: nowrap; display: contents;">
+            Hi,
+            <strong>@User.Identity?.Name!</strong>
+        </p>
+    </li>
+}
+<li id="search-nav-item" class="nav-item dropdown">
+    <a id="search-nav-link" class="nav-link d-flex text-dark" href="#" data-bs-toggle="dropdown"
+       role="button">
+        <span class="material-icons-outlined">
+            search
+        </span>
+        <span>
+            Search
+        </span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="search-nav-link"
+         style="width: auto">
+        <form class="input-group" style="width: 260px">
+            <input id="minisearch-input" class="form-control" type="search" name="q" value=""
+                   placeholder="Search..." aria-label="Search">
+            <button class="btn btn-primary" type="submit">
+                Go
+            </button>
+        </form>
+    </div>
+</li>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li id="account-nav-item" class="nav-item d-none d-lg-block">
+        <a class="nav-link d-flex text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
             <span class="material-icons-outlined">
-                search
+                account_circle
             </span>
             <span>
-                Search
+                Account
             </span>
         </a>
-        <div class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="search-nav-link"
-             style="width: auto">
-            <form class="input-group" style="width: 260px">
-                <input id="minisearch-input" class="form-control" type="search" name="q" value=""
-                       placeholder="Search..." aria-label="Search">
-                <button class="btn btn-primary" type="submit">
-                    Go
-                </button>
-            </form>
-        </div>
     </li>
-
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <li id="account-nav-item" class="nav-item d-none d-lg-block">
-            <a class="nav-link d-flex text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-                <span class="material-icons-outlined">
-                    account_circle
-                </span>
-                <span>
-                    Account
-                </span>
-            </a>
-        </li>
-        <li id="logout-nav-item" class="nav-item d-none d-lg-block">
-
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new {area = ""})" method="post">
-                <button type="submit" class="material-icons-outlined nav-link btn btn-link text-dark" style="font-size: 24px;">logout</button>
-                <span>
-                    Logout
-                </span>
-            </form>
-        </li>
-    }
-    else
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link d-flex text-dark" asp-area="Identity" asp-page="/Account/Login">
-                <span class="material-icons-outlined">
-                    login
-                </span>
-                <span>
-                    Login
-                </span>
-            </a>
-        </li>
-    }
-</ul>
+    @* *@
+    @* *@
+    @* <partial name="_CartPartial"/> *@
+    @* *@
+    @* *@
+    <li id="logout-nav-item" class="nav-item d-none d-lg-block">
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new {area = ""})" method="post">
+            <button type="submit" class="material-icons-outlined nav-link btn btn-link text-dark" style="font-size: 24px;">logout</button>
+            <span>
+                Logout
+            </span>
+        </form>
+    </li>
+}
+else
+{
+    @* <partial name="_CartPartial"/> *@
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link d-flex text-dark" asp-area="Identity" asp-page="/Account/Login">
+            <span class="material-icons-outlined">
+                login
+            </span>
+            <span>
+                Login
+            </span>
+        </a>
+    </li>
+}

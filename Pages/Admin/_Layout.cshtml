@@ -68,7 +68,9 @@
                     </li>
                     <partial name="_AdminPartial"/>
                 </ul>
-                <partial name="_LoginPartial"/>
+                <ul id="navbar-icons-nav" class="navbar-nav align-items-center">
+                    <partial name="_LoginPartial"/>
+                </ul>
             </div>
         </div>
     </nav>
@@ -82,10 +84,6 @@
 <script src="~/js/index.var.js" asp-append-version="true"></script>
 <script src="~/js/theme.js" asp-append-version="true"></script>
 <script src="~/js/table.js" asp-append-version="true"></script>
-<script>
-    const awn = new AWN();
-    awn.success("Success");
-</script>
 
 @await RenderSectionAsync("Scripts", required: false)
 </body>
