@@ -1,0 +1,246 @@
+@page "/Checkout/Information"
+@using DotnetStore.Models
+@model DotnetStore.Pages.Checkout.CheckoutInformation
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    Layout = "_CheckoutLayout";
+}
+
+<main class="main__content" role="main">
+<div class="step" data-step="contact_information" data-last-step="false">
+<form class="edit_checkout animate-floating-labels" accept-charset="UTF-8" method="post">
+<div class="step__sections">
+@if (!SignInManager.IsSignedIn(User))
+{
+    <div class="section section--contact-information">
+        <div class="section__header">
+            <div
+                class="layout-flex layout-flex--tight-vertical layout-flex--loose-horizontal layout-flex--wrap">
+                <h2 class="section__title layout-flex__item layout-flex__item--stretch"
+                    id="main-header" tabindex="-1">
+                    Contact information
+                </h2>
+                <p class="layout-flex__item">
+                    Already have an account?
+                    <a href="/Login">
+                        Log in
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="section__content" data-section="customer-information"
+             data-shopify-pay-validate-on-load="false">
+            <div class="fieldset">
+                <div class="field field--email_or_phone">
+                    <div class="field__input-wrapper">
+                        <label class="field__label field__label--visible"
+                               for="checkout_email">
+                            Email address
+                        </label>
+                        <input value="{{ session()->get('email', '') }}"
+                               placeholder="Email address"
+                               aria-describedby="checkout-context-step-one"
+                               aria-required="true"
+                               class="field__input" type="email" name="email"
+                               id="checkout_email" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="section__content" data-section="customer-information">
+        <input value="@UserManager.FindByNameAsync(User.Identity.Name).Result.Email" autocomplete="null email" size="30"
+               type="hidden" name="email" id="checkout_email">
+        <div class="logged-in-customer-information">
+            <p class="logged-in-customer-information__paragraph">
+                <span class="page-main__emphasis">
+                    @UserManager.FindByNameAsync(User.Identity.Name).Result.FirstName @UserManager.FindByNameAsync(User.Identity.Name).Result.LastName
+                </span>
+                <span>(@UserManager.FindByNameAsync(User.Identity.Name).Result.Email)</span>
+                <br>
+            </p>
+        </div>
+    </div>
+}
+<div class="section section--shipping-address">
+    <div class="section__header">
+        <h2 class="section__title" id="section-delivery-title">
+            Shipping address
+        </h2>
+    </div>
+
+    <div class="section__content">
+        <div class="fieldset">
+            <div class="address-fields">
+                <div class="field field--optional field--half"
+                     data-address-field="first_name">
+                    <div class="field__input-wrapper">
+                        <label class="field__label field__label--visible"
+                               for="checkout_shipping_address_first_name">
+                            First name
+                        </label>
+                        <input placeholder="First name" class="field__input"
+                               type="text" name="first_name"
+                               value="@Model.UserAddress?.FirstName"
+                               id="checkout_shipping_address_first_name" required>
+                    </div>
+                </div>
+                <div class="field field--required field--half"
+                     data-address-field="last_name">
+                    <div class="field__input-wrapper">
+                        <label class="field__label field__label--visible"
+                               for="checkout_shipping_address_last_name">
+                            Last name
+                        </label>
+                        <input placeholder="Last name" class="field__input"
+                               type="text"
+                               value="@Model.UserAddress?.LastName"
+                               name="last_name"
+                               id="checkout_shipping_address_last_name" required>
+                    </div>
+                </div>
+                <div class="field field--required">
+                    <div class="field__input-wrapper">
+                        <label class="field__label field__label--visible"
+                               for="checkout_shipping_address_address1">
+                            Address
+                        </label>
+                        <input placeholder="Address" class="field__input"
+                               type="text" value="{{ $userAddress ? $userAddress->address_line_1 : session()->get('address1') }}"
+                               name="address1"
+                               id="checkout_shipping_address_address1" required>
+                    </div>
+                </div>
+                <div data-address-field="address2"
+                     class="field field--optional">
+                    <div class="field__input-wrapper">
+                        <label class="field__label field__label--visible"
+                               for="checkout_shipping_address_address2">
+                            Apartment, suite, etc. (optional)
+                        </label>
+                        <input placeholder="Apartment, suite, etc. (optional)"
+                               value="{{ $userAddress ? $userAddress->address_line_2 : session()->get('address2') }}"
+                               class="field__input" size="30" type="text"
+                               name="address2"
+                               id="checkout_shipping_address_address2">
+                    </div>
+                </div>
+                <div class="field field--required field--half">
+                    <div class="field__input-wrapper">
+                        <label class="field__label field__label--visible"
+                               for="checkout_shipping_address_zip">
+                            Postal code
+                        </label>
+                        <input placeholder="Postal code"
+                               value="{{ $userAddress ? $userAddress->zip : session()->get('zip') }}"
+                               class="field__input field__input--zip" type="text"
+                               name="zip"
+                               id="checkout_shipping_address_zip" required>
+                    </div>
+                </div>
+                <div class="field field--required field--half">
+                    <div class="field__input-wrapper">
+                        <label class="field__label field__label--visible"
+                               for="checkout_shipping_address_city">
+                            City
+                        </label>
+                        <input placeholder="City" class="field__input" type="text"
+                               value="{{ $userAddress ? $userAddress->city : session()->get('city') }}"
+                               name="city" id="checkout_shipping_address_city"
+                               required>
+                    </div>
+                </div>
+                <div class="field field--required field--half field--show-floating-label"
+                     style="margin-bottom: 15px;">
+                    <div class="field__input-wrapper field__input-wrapper--select">
+                        <label class="field__label field__label--visible"
+                               for="checkout_shipping_address_country">
+                            Country
+                        </label>
+                        <select class="field__input field__input--select"
+                                name="country"
+                                id="checkout_shipping_address_country"
+                                placeholder="Country">
+                        </select>
+                        <div class="field__caret">
+                            <svg
+                                class="icon-svg icon-svg--color-adaptive-lighter icon-svg--size-10 field__caret-svg"
+                                role="presentation" aria-hidden="true"
+                                focusable="false">
+                                <use xlink:href="#caret-down"></use>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="field field--required field--half field--show-floating-label visually-hidden"
+                     style="margin-bottom: 15px;">
+                    <div class="field__input-wrapper field__input-wrapper--select">
+                        <label class="field__label field__label--visible"
+                               for="checkout_shipping_address_region">
+                            Region
+                        </label>
+                        <select class="field__input field__input--select"
+                                name="region"
+                                id="checkout_shipping_address_region"
+                                placeholder="Region">
+                        </select>
+                        <div class="field__caret">
+                            <svg
+                                class="icon-svg icon-svg--color-adaptive-lighter icon-svg--size-10 field__caret-svg"
+                                role="presentation" aria-hidden="true"
+                                focusable="false">
+                                <use xlink:href="#caret-down"></use>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field field--optional visually-hidden">
+                    <div class="field__input-wrapper">
+                        <label class="field__label field__label--visible"
+                               for="checkout_shipping_password">
+                            Password
+                        </label>
+                        <input placeholder="Password" value=""
+                               class="field__input" size="30" type="password"
+                               name="password"
+                               id="checkout_shipping_password">
+                    </div>
+                </div>
+                <div class="checkbox-wrapper" style="margin-left: 7px;">
+                    <div>
+                        <div class="checkbox__input">
+                            <input name="create_account_at_checkout"
+                                   type="hidden" value="0" autocomplete="off">
+                            <input class="input-checkbox" type="checkbox"
+                                   value="1"
+                                   name="create_account_at_checkout"
+                                   id="create_account_at_checkout">
+                        </div>
+                        <label class="checkbox__label">
+                            Create an account at checkout
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div class="step__footer" data-step-footer="">
+    <button name="button" type="submit" id="continue_button" class="step__footer__continue-btn btn" aria-busy="false">
+        <span class="btn__content" data-continue-button-content="true">
+            Continue to shipping
+        </span>
+    </button>
+</div>
+</form>
+</div>
+</main>

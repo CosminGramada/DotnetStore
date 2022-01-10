@@ -1,0 +1,94 @@
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@using DotnetStore.Models
+
+<li id="cart-nav-item" class="nav-item dropdown">
+    <a id="cart-nav-link" class="nav-link d-flex align-items-center active" href="#"
+       data-bs-toggle="dropdown" aria-current aria-expanded="false" role="button">
+        <span class="material-icons-outlined">
+            shopping_cart
+        </span>
+
+        <span>
+            Cart
+        </span>
+        @if (Context.Session.GetString("ShoppingSessionId") != null && JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Quantity) > 0)
+        {
+            <span class="badge d-inline-block ms-1 px-1" style="background-color: #0d6efd;">
+                @(JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Quantity))
+            </span>
+        }
+    </a>
+    @if (Context.Session.GetString("ShoppingSessionId") != null && JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Quantity) > 0)
+    {
+        <div class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="cart-nav-link"
+             style="width: auto;">
+            <div style="min-width: 260px;">
+                <form method="post">
+                    <ul class="list-unstyled p-0 mb-3">
+                        @foreach (var item in JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")))
+                        {
+                            <li class="py-2">
+                                <a class="d-flex align-items-center text-decoration-none "
+                                   href="/Products/ProductDetails?id=@item.Product.Id">
+                                    <img class="minicart-product-img img-fluid me-3 img-thumbnail"
+                                         src="~/images/@item.Product.ProductImage.Name"
+                                         alt="@item.Product.Name" width="75" height="75"
+                                         loading="lazy">
+                                    <div>
+                                        <h3 class="minicart-product-title h6 mb-1" style="margin-top: auto">
+                                            @item.Quantity x @item.Product.Name
+                                        </h3>
+                                        <span class="d-block small text-muted">
+                                            @item.ProductColor.Name / @item.ProductSize.Name
+                                        </span>
+                                        <span class="price d-block mt-1">
+                                            $@String.Format("{0:0.00}", item.Product.DiscountedPrice)
+                                        </span>
+                                    </div>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                    <div class="dropdown-divider mb-3">
+                    </div>
+                    <div class="minicart-footer">
+                        <p class="minicart-subtotal text-center mb-2">
+                            <span class="text-muted">
+                                Subtotal:
+                            </span>
+                            <b>
+                                $@(String.Format("{0:0.00}",JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice)))
+                            </b>
+                        </p>
+                        <div class="d-flex justify-content-center mx-n1">
+                            <a class="minicart-view-cart-btn btn btn-secondary w-100 m-1"
+                               href="/Cart">
+                                View cart
+                            </a>
+                            <button class="minicart-checkout-btn btn btn-primary w-100 m-1"
+                                    type="submit" name="checkout">
+                                Checkout
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="cart-nav-link"
+             style="width: auto;">
+            <div style="min-width: 260px;">
+                <p class="text-center text-muted">
+                    Your cart is currently empty.
+                </p>
+                <a class="btn d-block btn-sm btn-outline-primary active"
+                   href="{{ route('products.all') }}">
+                    Browse all products
+                </a>
+            </div>
+        </div>
+    }
+</li>
