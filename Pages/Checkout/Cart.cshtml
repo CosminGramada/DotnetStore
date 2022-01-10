@@ -1,0 +1,150 @@
+@page "/Cart"
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@using DotnetStore.Models
+@model Cart
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "Shared/_Layout";
+}
+
+<div class="shopify-section">
+    <article>
+        <!-- Heading -->
+        <header class="heading-wrapper mb-4 overflow-hidden text-center">
+            <h1 class="heading mb-1 display-5">
+                Your cart
+            </h1>
+        </header>
+        <div class="container">
+            @if (HttpContext.Session.GetString("ShoppingSessionId") != null && JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Quantity) > 0)
+            {
+                <div class="row">
+                    <div class="col-lg-8">
+                        <ul class="cart-product-list list-unstyled overflow-hidden mb-2">
+                            @foreach (var item in JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")))
+                            {
+                                <li class="cart-product-item row align-items-center mb-5 gx-4" data-line-item-id="2">
+                                    <div class="col-4">
+                                        <a href="/Products/ProductDetails?id=@item.Product.Id">
+                                            <img class="cart-product-item-img img-fluid img-thumbnail"
+                                                 src="~/images/@item.Product.ProductImage.Name"
+                                                 alt="" width="360" height="360">
+                                        </a>
+                                    </div>
+                                    <div class="col-8">
+                                        <!-- Item title -->
+                                        <h3 class="product-item-title h6 mb-1" style="margin-top: auto">
+                                            <a href="/Products/ProductDetails?id=@item.Product.Id">
+                                                @item.Quantity x @item.Product.Name
+                                            </a>
+                                        </h3>
+                                        <p class="product-item-variant text-muted mb-2 small">
+                                            @item.ProductColor.Name / @item.ProductSize.Name
+                                        </p>
+
+                                        @if (JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.Price) == JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice))
+                                        {
+                                            <p class="product-item-price mb-3">
+                                                <span class="price">
+                                                    $@(String.Format("{0:0.00}", item.Product.Price))
+                                                </span>
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="product-item-price mb-3">
+                                                <s class="price-compare text-muted me-1">
+                                                    <span class="visually-hidden">
+                                                        Old price
+                                                    </span>
+                                                    $@(String.Format("{0:0.00}", item.Product.Price))
+                                                </s>
+
+                                                <span class="price">
+                                                    $@(String.Format("{0:0.00}", item.Product.DiscountedPrice))
+                                                </span>
+                                            </p>
+                                        }
+                                        <div class="mb-2" style="max-width: 75px;">
+                                            <input disabled type="number" name="updates[]" id="updates"
+                                                   class="product-item-qty form-control form-control-sm" value="@item.Quantity" min="1"
+                                                   data-line="2"
+                                                   aria-label="Quantity">
+                                            <input type="hidden" name="variant_id" id="variant_id" value="@item.ProductVariant.Id">
+                                        </div>
+
+                                        <!-- Remove button -->
+                                        <form asp-page-handler="ProductRemove" asp-route-productVariantId="@item.ProductVariant.Id" method="post">
+                                            <button class="product-item-remove btn btn-link text-muted btn-sm mt-n2 ms-n1 mb-n1" title="Remove">
+                                                Remove
+                                            </button>
+                                        </form>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <!-- Cart Summary -->
+                        <div id="cart-summary" class="sticky-top" style="top: 76px; z-index: 1019;">
+                            <form method="post">
+                                <footer class="bg-light border mb-4 p-4 rounded">
+                                    <h2 class="h4 mb-3" style="margin-top: auto">
+                                        Summary
+                                    </h2>
+
+                                    <!-- Note -->
+                                    <textarea id="cart-note" rows="3" class="form-control mb-5" name="note"
+                                                  placeholder="Special instructions for your order"
+                                                  aria-label="Special instructions for your order"></textarea>
+
+                                    <!-- Subtotal -->
+                                    <p id="cart-subtotal" class="d-flex justify-content-between mb-3 lead">
+                                        <span>
+                                            Subtotal
+                                        </span>
+                                        @if (JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.Price) == JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice))
+                                        {
+                                            <span id="cart-subtotal" class="d-block">
+                                                <strong>
+                                                    $@(String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.Price)))
+                                                </strong>
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span id="cart-subtotal" class="d-block">
+                                                <s class="text-muted d-inline-block me-1">
+                                                    $@(String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.Price)))
+                                                </s>
+                                                <strong>
+                                                    $@(String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice)))
+                                                </strong>
+                                            </span>
+                                        }
+                                    </p>
+                                    <hr>
+                                    <!-- Taxes & shipping at checkout -->
+                                    <p id="taxes-shipping-at-checkout" class="text-muted text-center font-italic">
+                                        Taxes &amp; Shipping calculated at checkout
+                                    </p>
+                                    <!-- Checkout button -->
+                                    <input id="checkout-btn" type="submit" name="checkout"
+                                           class="btn btn-primary btn-lg w-100" value="Checkout">
+                                </footer>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p id="cart-empty" class="alert alert-warning mb-9">
+                    Your cart is currently empty. <a href="{{ route('products.all') }}">Continue shopping »</a>
+                </p>
+            }
+        </div>
+    </article>
+</div>
