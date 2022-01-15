@@ -1,86 +1,390 @@
-﻿<!DOCTYPE html>
+﻿@using Newtonsoft.Json
+@using DotnetStore.Models
+@using Microsoft.AspNetCore.Http
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - DotnetStore</title>
-    <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"/>
-    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true"/>
+    @if (@Context.Request.Path.StartsWithSegments("/Checkout"))
+    {
+        <link rel="stylesheet" href="~/css/checkout.css" asp-append-version="true"/>
+    }
+    else
+    {
+        <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"/>
+        <link rel="stylesheet" href="~/css/style.css" asp-append-version="true"/>
+    }
 </head>
 <body>
-<div id="shopify-section-navbar" class="shopify-section sticky-top">
-    <nav id="navbar" class="navbar navbar-expand-lg navbar-light shadow-sm navbar-sticky" style="background-color: #ffffff;">
-        <div class="container">
-            <!-- Navbar brand -->
-            <a id="navbar-brand" class="navbar-brand py-1 me-0 me-lg-3" href="/Index">
-                <img src="~/assets/logo.svg"
-                     width="126" height="30">
+@if (Context.Request.Path.StartsWithSegments("/Checkout"))
+{
+    <main id="main" class role="main">
+    <div class="content" data-content="">
+    <div class="wrap">
+    <div class="main">
+        <header class="main__header" role="banner">
+            <h1 class="visually-hidden">
+                Information
+            </h1>
+            <nav aria-label="Breadcrumb">
+                <ol class="breadcrumb " role="list">
+                    <ol class="breadcrumb " role="list">
+                        <li class="breadcrumb__item breadcrumb__item--completed">
+                            <a class="breadcrumb__link" href="/Cart">Cart</a>
+                            <svg
+                                class="icon-svg icon-svg--color-adaptive-light icon-svg--size-10 breadcrumb__chevron-icon"
+                                aria-hidden="true" focusable="false">
+                                <use xlink:href="#chevron-right"></use>
+                            </svg>
+                        </li>
+                        @if (Context.Request.Path == "/Checkout/Information")
+                        {
+                            <li class="breadcrumb__item breadcrumb__item--current" aria-current="step">
+                                <span class="breadcrumb__text">Information</span>
+                                <svg
+                                    class="icon-svg icon-svg--color-adaptive-light icon-svg--size-10 breadcrumb__chevron-icon"
+                                    aria-hidden="true" focusable="false">
+                                    <use xlink:href="#chevron-right"></use>
+                                </svg>
+                            </li>
+                            <li class="breadcrumb__item breadcrumb__item--blank">
+                                <span class="breadcrumb__text">Shipping</span>
+                                <svg
+                                    class="icon-svg icon-svg--color-adaptive-light icon-svg--size-10 breadcrumb__chevron-icon"
+                                    aria-hidden="true" focusable="false">
+                                    <use xlink:href="#chevron-right"></use>
+                                </svg>
+                            </li>
+                            <li class="breadcrumb__item breadcrumb__item--blank">
+                                <span class="breadcrumb__text">Payment</span>
+                            </li>
+                        }
+                        else if (Context.Request.Path == "/Checkout/Shipping")
+                        {
+                            <li class="breadcrumb__item breadcrumb__item--completed">
+                                <a class="breadcrumb__link" href="/Checkout/Information">Information</a>
+                                <svg
+                                    class="icon-svg icon-svg--color-adaptive-light icon-svg--size-10 breadcrumb__chevron-icon"
+                                    aria-hidden="true" focusable="false">
+                                    <use xlink:href="#chevron-right"></use>
+                                </svg>
+                            </li>
+                            <li class="breadcrumb__item breadcrumb__item--current">
+                                <span class="breadcrumb__text">Shipping</span>
+                                <svg
+                                    class="icon-svg icon-svg--color-adaptive-light icon-svg--size-10 breadcrumb__chevron-icon"
+                                    aria-hidden="true" focusable="false">
+                                    <use xlink:href="#chevron-right"></use>
+                                </svg>
+                            </li>
+                            <li class="breadcrumb__item breadcrumb__item--blank">
+                                <span class="breadcrumb__text">Payment</span>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="breadcrumb__item breadcrumb__item--completed">
+                                <a class="breadcrumb__link" href="/Checkout/Information">Information</a>
+                                <svg
+                                    class="icon-svg icon-svg--color-adaptive-light icon-svg--size-10 breadcrumb__chevron-icon"
+                                    aria-hidden="true" focusable="false">
+                                    <use xlink:href="#chevron-right"></use>
+                                </svg>
+                            </li>
+                            <li class="breadcrumb__item breadcrumb__item--completed">
+                                <a class="breadcrumb__link" href="/Checkout/Shipping">Shipping</a>
+                                <svg
+                                    class="icon-svg icon-svg--color-adaptive-light icon-svg--size-10 breadcrumb__chevron-icon"
+                                    aria-hidden="true" focusable="false">
+                                    <use xlink:href="#chevron-right"></use>
+                                </svg>
+                            </li>
+                            <li class="breadcrumb__item breadcrumb__item--current">
+                                <span class="breadcrumb__text">Payment</span>
+                            </li>
+                        }
+                    </ol>
+                </ol>
+            </nav>
+        </header>
+        @RenderBody()
+    </div>
+    <aside class="sidebar" role="complementary">
+        <div class="sidebar__header">
+            <a class="logo logo--left" href="https://ks-bootshop.myshopify.com/">
+                <span class="logo__text heading-1">
+                    DotnetStore
+                </span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Navbar icons nav -->
-            <div id="navbar-collapse" class="collapse navbar-collapse">
-                <!-- Navbar nav -->
-                <ul id="navbar-nav" class="navbar-nav my-2 my-lg-0 mx-auto">
-                    <li class="nav-item ">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a id="catalog" class="nav-link dropdown-toggle text-dark" href="#" aria-current="" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            Catalog
-                        </a>
-                        <ul class="dropdown-menu " aria-labelledby="catalog">
-                            <li>
-                                <a id="catalog-sale" class="dropdown-item text-dark" href="#">
-                                    Sale
-                                </a>
-                            </li>
-                            <div class="dropdown-divider"></div>
-                            <li>
-                                <a id="catalog-men" class="dropdown-item text-dark" href="{{ route('products.men') }}" aria-current="">
-                                    Men
-                                </a>
-                            </li>
-                            <li>
-                                <a id="catalog-women" class="dropdown-item text-dark" href="{{ route('products.women') }}" aria-current="">
-                                    Women
-                                </a>
-                            </li>
-                            <li>
-                                <a id="catalog-unisex" class="dropdown-item text-dark" href="{{ route('products.unisex') }}" aria-current="">
-                                    Unisex
-                                </a>
-                            </li>
-                            <div class="dropdown-divider"></div>
-                            <li>
-                                <a id="catalog-all" class="dropdown-item text-dark" href="{{ route('products.all') }}" aria-current="">
-                                    All products
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <partial name="_AdminPartial"/>
-                </ul>
-                <ul id="navbar-icons-nav" class="navbar-nav align-items-center">
-                    <partial name="_LoginPartial"/>
-                </ul>
+            <h1 class="visually-hidden">
+                Information
+            </h1>
+        </div>
+        <div class="sidebar__content">
+            <div id="order-summary" class="order-summary order-summary--is-collapsed" data-order-summary="">
+                <h2 style="margin-top: 75px; margin-bottom: 25px;">
+                    Order summary
+                </h2>
+                <div class="order-summary__sections">
+                    <div class="order-summary__section order-summary__section--product-list">
+                        <div class="order-summary__section__content">
+                            <table class="product-table">
+                                <caption class="visually-hidden">Shopping cart</caption>
+                                <thead class="product-table__header">
+                                <tr>
+                                    <th scope="col">
+                                        <span class="visually-hidden">Product image</span>
+                                    </th>
+                                    <th scope="col">
+                                        <span class="visually-hidden">Description</span>
+                                    </th>
+                                    <th scope="col">
+                                        <span class="visually-hidden">Quantity</span>
+                                    </th>
+                                    <th scope="col">
+                                        <span class="visually-hidden">Price</span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody data-order-summary-section="line-items">
+
+                                </tbody>
+                            </table>
+                            <div class="order-summary__scroll-indicator" aria-hidden="true" tabindex="-1">
+                                Scroll for more items
+                                <svg aria-hidden="true" focusable="false" class="icon-svg icon-svg--size-12">
+                                    <use xlink:href="#down-arrow"></use>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-summary__section order-summary__section--total-lines"
+                         data-order-summary-section="payment-lines">
+                        <table class="total-line-table">
+                            <caption class="visually-hidden">Cost summary</caption>
+                            <thead>
+                            <tr>
+                                <th scope="col">
+                                    <span class="visually-hidden">Description</span>
+                                </th>
+                                <th scope="col">
+                                    <span class="visually-hidden">Price</span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="total-line-table__tbody">
+                            <tr class="total-line total-line--subtotal">
+                                <th class="total-line__name" scope="row">Subtotal</th>
+                                <td class="total-line__price">
+                                    <span class="order-summary__emphasis">
+                                        $@(String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice)))
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr class="total-line total-line--shipping">
+                                <th class="total-line__name" scope="row">
+                                    <span>
+                                        Shipping
+                                    </span>
+                                </th>
+                                <td class="total-line__price">
+                                    <span class="order-summary__small-text">
+                                        ${{ session()->get('shipping_rate') }}
+                                    </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tfoot class="total-line-table__footer">
+                            <tr class="total-line">
+                                <th class="total-line__name payment-due-label" scope="row">
+                                    <span class="payment-due-label__total">Total</span>
+                                    <span class="payment-due-label__taxes order-summary__small-text hidden"
+                                          data-checkout-taxes="">
+                                        Including
+                                        <span data-checkout-total-taxes-target="0">
+                                            $0.00
+                                        </span> in taxes
+                                    </span>
+                                </th>
+                                <td class="total-line__price payment-due">
+                                    <span class="payment-due__currency">
+                                        USD
+                                    </span>
+                                    <span class="payment-due__price">
+                                        ${{ number_format(\App\Http\Controllers\CartController::getCartSubtotal(session()->get('session_guid')) + session()->get('shipping_rate'), 2) }}
+                                    </span>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="visually-hidden" data-order-summary-section="accessibility-live-region">
+                <div aria-live="polite" aria-atomic="true" role="status">
+                    Updated total price:
+                    <span>
+                        ${{ number_format(\App\Http\Controllers\CartController::getCartSubtotal(session()->get('session_guid')) + session()->get('shipping_rate'), 2) }}
+                        <input type="hidden" value="23.20" name="total_price">
+                    </span>
+                </div>
+            </div>
+            <div id="partial-icon-symbols" class="icon-symbols" data-tg-refresh="partial-icon-symbols"
+                 data-tg-refresh-always="true">
+                <svg xmlns="http://www.w3.org/2000/svg">
+                    <symbol id="info">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path
+                                d="M12 11h1v7h-2v-5c-.552 0-1-.448-1-1s.448-1 1-1h1zm0 13C5.373 24 0 18.627 0 12S5.373 0 12 0s12 5.373 12 12-5.373 12-12 12zm0-2c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM10.5 7.5c0-.828.666-1.5 1.5-1.5.828 0 1.5.666 1.5 1.5 0 .828-.666 1.5-1.5 1.5-.828 0-1.5-.666-1.5-1.5z">
+                            </path>
+                        </svg>
+                    </symbol>
+                    <symbol id="caret-down">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+                            <path d="M0 3h10L5 8" fill-rule="nonzero"></path>
+                        </svg>
+                    </symbol>
+                    <symbol id="spinner-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path
+                                d="M20 10c0 5.523-4.477 10-10 10S0 15.523 0 10 4.477 0 10 0v2c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8h2z">
+                            </path>
+                        </svg>
+                    </symbol>
+                    <symbol id="chevron-right">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+                            <path d="M2 1l1-1 4 4 1 1-1 1-4 4-1-1 4-4"></path>
+                        </svg>
+                    </symbol>
+                    <symbol id="down-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+                            <path
+                                d="M10.817 7.624l-4.375 4.2c-.245.235-.64.235-.884 0l-4.375-4.2c-.244-.234-.244-.614 0-.848.245-.235.64-.235.884 0L5.375 9.95V.6c0-.332.28-.6.625-.6s.625.268.625.6v9.35l3.308-3.174c.122-.117.282-.176.442-.176.16 0 .32.06.442.176.244.234.244.614 0 .848">
+                            </path>
+                        </svg>
+                    </symbol>
+                    <symbol id="arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                            <path d="M16 8.1l-8.1 8.1-1.1-1.1L13 8.9H0V7.3h13L6.8 1.1 7.9 0 16 8.1z"></path>
+                        </svg>
+                    </symbol>
+                    <symbol id="question">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                            <path
+                                d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm.7 13H6.8v-2h1.9v2zm2.6-7.1c0 1.8-1.3 2.6-2.8 2.8l-.1 1.1H7.3L7 7.5l.1-.1c1.8-.1 2.6-.6 2.6-1.6 0-.8-.6-1.3-1.6-1.3-.9 0-1.6.4-2.3 1.1L4.7 4.5c.8-.9 1.9-1.6 3.4-1.6 1.9.1 3.2 1.2 3.2 3z">
+                            </path>
+                        </svg>
+                    </symbol>
+                    <symbol id="close">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                            <path
+                                d="M15.1 2.3L13.7.9 8 6.6 2.3.9.9 2.3 6.6 8 .9 13.7l1.4 1.4L8 9.4l5.7 5.7 1.4-1.4L9.4 8">
+                            </path>
+                        </svg>
+                    </symbol>
+                    <symbol id="spinner-small">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                            <path
+                                d="M32 16c0 8.837-7.163 16-16 16S0 24.837 0 16 7.163 0 16 0v2C8.268 2 2 8.268 2 16s6.268 14 14 14 14-6.268 14-14h2z">
+                            </path>
+                        </svg>
+                    </symbol>
+                </svg>
             </div>
         </div>
-    </nav>
-</div>
-<main id="main" role="main" class="pb-3">
-    @RenderBody()
-</main>
+    </aside>
+    </div>
+    </div>
+    </main>
+}
+else
+{
+    <div id="shopify-section-navbar" class="shopify-section sticky-top">
+        <nav id="navbar" class="navbar navbar-expand-lg navbar-light shadow-sm navbar-sticky" style="background-color: #ffffff;">
+            <div class="container">
+                <!-- Navbar brand -->
+                <a id="navbar-brand" class="navbar-brand py-1 me-0 me-lg-3" href="/Index">
+                    <img src="~/assets/logo.svg"
+                         width="126" height="30">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- Navbar icons nav -->
+                <div id="navbar-collapse" class="collapse navbar-collapse">
+                    <!-- Navbar nav -->
+                    <ul id="navbar-nav" class="navbar-nav my-2 my-lg-0 mx-auto">
+                        <li class="nav-item ">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a id="catalog" class="nav-link dropdown-toggle text-dark" href="#" aria-current="" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Catalog
+                            </a>
+                            <ul class="dropdown-menu " aria-labelledby="catalog">
+                                <li>
+                                    <a id="catalog-sale" class="dropdown-item text-dark" href="/Collections/Sale" aria-current="">
+                                        Sale
+                                    </a>
+                                </li>
+                                <div class="dropdown-divider"></div>
+                                <li>
+                                    <a id="catalog-men" class="dropdown-item text-dark" href="/Collections/Men" aria-current="">
+                                        Men
+                                    </a>
+                                </li>
+                                <li>
+                                    <a id="catalog-women" class="dropdown-item text-dark" href="/Collections/Women" aria-current="">
+                                        Women
+                                    </a>
+                                </li>
+                                <li>
+                                    <a id="catalog-unisex" class="dropdown-item text-dark" href="/Collections/Unisex" aria-current="">
+                                        Unisex
+                                    </a>
+                                </li>
+                                <div class="dropdown-divider"></div>
+                                <li>
+                                    <a id="catalog-all" class="dropdown-item text-dark" href="/Collections/AllProducts" aria-current="">
+                                        All products
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <partial name="_AdminPartial"/>
+                    </ul>
+                    <ul id="navbar-icons-nav" class="navbar-nav align-items-center">
+                        <partial name="_LoginPartial"/>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <main id="main" role="main" class="pb-3">
+        @RenderBody()
+    </main>
+}
 
 <script src="~/lib/jquery/dist/jquery-3.6.0.min.js"></script>
-<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/index.var.js" asp-append-version="true"></script>
-<script src="~/js/theme.js" asp-append-version="true"></script>
+
+@if (@Context.Request.Path.StartsWithSegments("/Checkout"))
+{
+    <script src="~/js/checkout.js" asp-append-version="true"></script>
+    <script src="~/js/checkout-custom.js" asp-append-version="true"></script>
+}
+else
+{
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/theme.js" asp-append-version="true"></script>
+}
 
 @await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -1,0 +1,171 @@
+@page "/Checkout/Shipping"
+@using DotnetStore.Models
+@model DotnetStore.Pages.Checkout.CheckoutShipping
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    Layout = "Shared/_Layout";
+}
+
+<main class="main__content" role="main">
+    <div class="step">
+        <form class="edit_checkout" method="post" accept-charset="UTF-8">
+            <div class="step__sections">
+                <div class="section">
+                    <div class="content-box">
+                        <div role="table"
+                             class="content-box__row content-box__row--tight-spacing-vertical">
+                            <div role="row" class="review-block">
+                                <div class="review-block__inner">
+                                    <div role="rowheader" class="review-block__label">
+                                        Contact
+                                    </div>
+                                    <div role="cell" class="review-block__content">
+                                        @if (SignInManager.IsSignedIn(User))
+                                        {
+                                            <bdo dir="ltr">@UserManager.FindByNameAsync(User.Identity.Name).Result.Email</bdo>   
+                                        }
+                                        else
+                                        {
+                                            <bdo dir="ltr">@Model.UserAddress.User.Email</bdo>
+                                        }
+                                    </div>
+                                </div>
+                                <div role="cell" class="review-block__link">
+                                    <a class="link--small" href="/Checkout/Information">
+                                        <span aria-hidden="true">
+                                            Change
+                                        </span>
+                                        <span
+                                            class="visually-hidden">
+                                            Change contact information
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div role="row" class="review-block">
+                                <div class="review-block__inner">
+                                    <div role="rowheader" class="review-block__label">
+                                        Ship to
+                                    </div>
+                                    <div role="cell" class="review-block__content">
+                                        <address class="address address--tight">
+                                            @Html.DisplayFor(m => m.UserAddress.Address1),
+                                            @Html.DisplayFor(m => m.UserAddress.Address2),
+                                            @Html.DisplayFor(m => m.UserAddress.Zip)
+                                            @Html.DisplayFor(m => m.UserAddress.City),
+                                            @Html.DisplayFor(m => m.UserAddress.Country.Name),
+                                            <address>
+                                            </address>
+                                        </address>
+                                    </div>
+                                </div>
+                                <div role="cell" class="review-block__link">
+                                    <a class="link--small"
+                                       href="/Checkout/Information">
+                                        <span aria-hidden="true">Change</span>
+                                        <span class="visually-hidden">Change shipping address</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section section--shipping-method">
+                    <div class="section__header">
+                        <h2 class="section__title" id="main-header" tabindex="-1">
+                            Shipping method
+                        </h2>
+                    </div>
+                    <div class="section__content">
+                        <div class="content-box">
+                            <div class="content-box__row">
+                                <div class="radio-wrapper">
+                                    <div class="radio__input">
+                                        <input class="input-radio" type="radio"
+                                               value="Free"
+                                               name="shipping_method"
+                                               id="checkout_shipping_rate_id_free"
+                                               checked="checked">
+                                    </div>
+                                    <label class="radio__label"
+                                           for="checkout_shipping_rate_id_free">
+                                        <span class="radio__label__primary">
+                                            Free (2-3 weeks)
+                                        </span>
+                                        <span class="radio__label__accessory">
+                                            <span class="content-box__emphasis">
+                                                Free
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="content-box__row">
+                                <div class="radio-wrapper">
+                                    <div class="radio__input">
+                                        <input class="input-radio" type="radio"
+                                               value="Standard"
+                                               name="shipping_method"
+                                               id="checkout_shipping_rate_id_standard">
+                                    </div>
+                                    <label class="radio__label"
+                                           for="checkout_shipping_rate_id_standard">
+                                        <span class="radio__label__primary">
+                                            Standard (6-7 days)
+                                        </span>
+                                        <span class="radio__label__accessory">
+                                            <span class="content-box__emphasis">
+                                                $20.57
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="content-box__row">
+                                <div class="radio-wrapper">
+                                    <div class="radio__input">
+                                        <input class="input-radio" type="radio"
+                                               value="Express"
+                                               name="shipping_method"
+                                               id="checkout_shipping_rate_id_express">
+                                    </div>
+                                    <label class="radio__label"
+                                           for="checkout_shipping_rate_id_express">
+                                        <span class="radio__label__primary">
+                                            Express (1-2 days)
+                                        </span>
+                                        <span class="radio__label__accessory">
+                                            <span class="content-box__emphasis">
+                                                $49.80
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="step__footer" data-step-footer="">
+                <button name="button" type="submit" id="continue_button"
+                        class="step__footer__continue-btn btn" aria-busy="false">
+                    <span class="btn__content">Continue to payment</span>
+                    <svg class="icon-svg icon-svg--size-18 btn__spinner icon-svg--spinner-button"
+                         aria-hidden="true" focusable="false">
+                        <use xlink:href="#spinner-button"></use>
+                    </svg>
+                </button>
+                <a class="step__footer__previous-link" href="/Checkout/Information">
+                    <svg focusable="false" aria-hidden="true"
+                         class="icon-svg icon-svg--color-accent icon-svg--size-10 previous-link__icon"
+                         role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+                        <path d="M8 1L7 0 3 4 2 5l1 1 4 4 1-1-4-4"></path>
+                    </svg>
+                    <span class="step__footer__previous-link-content">Return to information</span>
+                </a>
+            </div>
+        </form>
+    </div>
+</main>

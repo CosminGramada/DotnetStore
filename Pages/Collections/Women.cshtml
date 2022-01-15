@@ -1,0 +1,81 @@
+@page "/Collections/Women"
+@model DotnetStore.Pages.Collections.Women
+
+@{
+    Layout = "Shared/_Layout";
+}
+
+<div id="shopify-section-collection-template" class="shopify-section">
+    <div id="collection-239139815586" class="collection">
+        <img class="collection-img w-100 h-auto object-fit-cover mt-n7 mb-6" src="~/assets/home.jpeg"
+             width="1600" height="320" style="max-height: 320px;">
+        <!-- Collection header -->
+        <div class="heading-wrapper container-lg overflow-hidden text-center mx-auto mb-3" style="max-width: 768px">
+            <h1 class="heading mb-1 display-5">
+                Women
+            </h1>
+            <div class="description rte text-muted ">
+                <p>Browse through our collection of women products.</p>
+            </div>
+        </div>
+        <div class="container-lg">
+            <ul class="items-grid list-unstyled row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3 row-cols-xxl-6 g-3 g-sm-3 g-xl-4">
+                @foreach (var item in @Model.Products)
+                {
+                    <li class="product-item col pb-5 text-center">
+                        <!-- Product Image -->
+                        <a class="product-image d-block text-decoration-none" href="/Products/ProductDetails?id=@item.Id">
+                            <img class="product-item-img img-fluid mb-0 img-thumbnail"
+                                 src="~/images/@item.ProductImage.Name"
+                                 width="480" height="480" loading="lazy"
+                                 style="min-width: 180px; min-height: 180px; max-width: 180px; max-height: 180px;" alt="">
+
+                            <h3 class="product-item-title h5 mb-1" style="margin-top: 1rem;">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </h3>
+                            @if (item.Quantity == 0)
+                            {
+                                <p class="product-item-price mb-1">
+                                    <span class="price">
+                                        $@Html.DisplayFor(modelItem => item.Price)
+                                    </span>
+                                </p>
+                                <span class="badge-sold-out badge text-uppercase">
+                                    Sold Out
+                                </span>
+                            }
+                            else if (item.Price == item.DiscountedPrice)
+                            {
+                                <p class="product-item-price mb-1">
+                                    <s class="price-compare text-muted me-1">
+                                        <span class="visually-hidden">
+                                            Old price
+                                        </span>
+                                        $@Html.DisplayFor(modelItem => item.Price)
+                                    </s>
+                                    <span class="price">
+                                        $@Html.DisplayFor(modelItem => item.DiscountedPrice)
+                                    </span>
+                                </p>
+                                <span class="badge-sale badge text-uppercase">
+                                    <span class="visually-hidden">
+                                        Discount:
+                                    </span>
+                                    Sale
+                                </span>
+                            }
+                            else
+                            {
+                                <p class="product-item-price mb-1">
+                                    <span class="price">
+                                        $@Html.DisplayFor(modelItem => item.Price)
+                                    </span>
+                                </p>
+                            }
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

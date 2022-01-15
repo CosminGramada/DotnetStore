@@ -6517,16 +6517,6 @@
             for (var r in t) o.call(t, r) && (e[r] = t[r]);
             return n.prototype = t.prototype, e.prototype = new n, e.__super__ = t.prototype, e
         }, o = {}.hasOwnProperty;
-        this.ClientDetailsTracker = function (e) {
-            function n() {
-                var e, t;
-                n.__super__.constructor.apply(this, arguments), e = k(window), t = [this._createInput("browser_width", e.width()), this._createInput("browser_height", e.height()), this._createInput("javascript_enabled", 1), this._createInput("color_depth", window.screen.colorDepth), this._createInput("java_enabled", window.navigator.javaEnabled()), this._createInput("browser_tz", (new Date).getTimezoneOffset())], this.$("form").append(t)
-            }
-
-            return t(n, e), n.displayName = "ClientDetailsTracker", n.prototype._createInput = function (e, t) {
-                return k("<input>").attr("type", "hidden").attr("name", "checkout[client_details][" + e + "]").val(t)
-            }, n
-        }(Behaviour)
     }.call(this), function () {
         var a = function (e, t) {
             function n() {
