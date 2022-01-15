@@ -1,7 +1,6 @@
 using DotnetStore.Data;
 using DotnetStore.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 
@@ -20,24 +19,24 @@ public class CheckoutPageModel: PageModel
         _userManager = userManager;
     }
 
-    public UserAddress UserAddress { get; set; }
-    public string GuestEmail { get; set; }
+    public CheckoutModel CheckoutUserInformation { get; set; }
 
-    protected async Task GetUserAddress()
+    protected async Task GetCheckoutUserInformation()
     {
         if (_signInManager.IsSignedIn(User))
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            UserAddress = _context
+            var userAddress = _context
                 .UserAddresses
-                .Single(u => u.UserId == user.Id && u.IsDefault);    
+                .Single(u => u.UserId == user.Id && u.IsDefault);
+            CheckoutUserInformation = (CheckoutModel) userAddress;
         }
         else
         {
-            var sessionUserAddress = HttpContext.Session.GetString("GuestUserAddress");
+            var sessionUserAddress = HttpContext.Session.GetString("CheckoutInformation");
             if (sessionUserAddress != null)
             {
-                UserAddress = JsonConvert.DeserializeObject<UserAddress>(HttpContext.Session.GetString("GuestUserAddress"));
+                CheckoutUserInformation = JsonConvert.DeserializeObject<CheckoutModel>(HttpContext.Session.GetString("CheckoutInformation"));
             }
         }
     }

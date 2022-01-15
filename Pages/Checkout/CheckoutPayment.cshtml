@@ -1,0 +1,293 @@
+@page "/Checkout/Payment"
+@using DotnetStore.Models
+@model DotnetStore.Pages.Checkout.CheckoutPayment
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    Layout = "Shared/_Layout";
+}
+
+<main class="main__content" role="main">
+<div class="step">
+<div class="step__sections">
+<div class="section">
+    <div class="content-box">
+        <div role="table"
+             class="content-box__row content-box__row--tight-spacing-vertical">
+            <div role="row" class="review-block">
+                <div class="review-block__inner">
+                    <div role="rowheader" class="review-block__label">
+                        Contact
+                    </div>
+                    <div role="cell" class="review-block__content">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <bdo dir="ltr">@UserManager.FindByNameAsync(User.Identity.Name).Result.Email</bdo>
+                        }
+                        else
+                        {
+                            <bdo dir="ltr">@Model.CheckoutUserInformation.Email</bdo>
+                        }
+                    </div>
+                </div>
+                <div role="cell" class="review-block__link">
+                    <a class="link--small"
+                       href="/Checkout/Information">
+                        <span aria-hidden="true">Change</span>
+                        <span class="visually-hidden">Change contact information</span>
+                    </a>
+                </div>
+            </div>
+            <div role="row" class="review-block">
+                <div class="review-block__inner">
+                    <div role="rowheader" class="review-block__label">
+                        Ship to
+                    </div>
+                    <div role="cell" class="review-block__content">
+                        <address class="address address--tight">
+                            @Html.DisplayFor(m => m.CheckoutUserInformation.Address1),
+                            @Html.DisplayFor(m => m.CheckoutUserInformation.Address2),
+                            @Html.DisplayFor(m => m.CheckoutUserInformation.Zip)
+                            @Html.DisplayFor(m => m.CheckoutUserInformation.City),
+                            @Html.DisplayFor(m => m.CheckoutUserInformation.Country.Name)
+                            <address>
+                            </address>
+                        </address>
+                    </div>
+                </div>
+                <div role="cell" class="review-block__link">
+                    <a class="link--small"
+                       href="/Checkout/Information">
+                        <span aria-hidden="true">Change</span>
+                        <span class="visually-hidden">Change shipping address</span>
+                    </a>
+                </div>
+            </div>
+            <div role="row" class="review-block">
+                <div class="review-block__inner">
+                    <div role="rowheader" class="review-block__label">
+                        Method
+                    </div>
+                    <div role="cell" class="review-block__content">
+                        @Html.Raw(Model.CheckoutUserInformation.ShippingMethod)
+                        @if (Model.CheckoutUserInformation.ShippingRate != 0)
+                        {
+                            @Html.Raw(".")
+                            <strong class="emphasis">
+                                <span>
+                                    @Html.Raw("$" + String.Format("{0:0.00}", Model.CheckoutUserInformation.ShippingRate))
+                                </span>
+                            </strong>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<form class="edit_checkout animate-floating-labels" accept-charset="UTF-8" method="post">
+<div class="section section--payment-method">
+    <div class="section__header">
+        <h2 class="section__title" id="main-header" tabindex="-1"
+            style="margin-top: 50px;">
+            Payment
+        </h2>
+    </div>
+    <div class="section__content">
+        <div>
+            <div class="content-box">
+                <div class="radio-wrapper content-box__row ">
+                    <div class="radio__label  radio__label--inactive">
+                        <h3 class="radio__label__primary content-box__emphasis">
+                            Credit card
+                        </h3>
+                        <div class="radio__label__accessory">
+                            <h3 class="visually-hidden">
+                                Pay with:
+                            </h3>
+                            <ul role="list">
+                                <li class="payment-icon payment-icon--bogus"
+                                    aria-current="false">
+                                    <span class="visually-hidden">
+                                        Bogus,
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-box__row content-box__row--no-padding">
+                    <div class="card-fields-styling-options">
+                    </div>
+                    <div id="payment-gateway"
+                         class="radio-wrapper content-box__row content-box__row--secondary card-fields-container card-fields-container--loaded card-fields-container--transitioned">
+                        <div class="fieldset">
+                            <div
+                                class="field field--required field--show-floating-label">
+                                <div class="field__input-wrapper">
+                                    <label
+                                        class="field__label field__label--visible"
+                                        for="checkout_credit_card_number">
+                                        Card number
+                                    </label>
+                                    <input placeholder="Card number"
+                                           class="field__input" type="number"
+                                           name="card_number"
+                                           id="checkout_credit_card_number"
+                                           required>
+                                </div>
+                            </div>
+                            <div
+                                class="field field--required field--show-floating-label">
+                                <div class="field__input-wrapper">
+                                    <label
+                                        class="field__label field__label--visible"
+                                        for="checkout_credit_card_name">
+                                        Name on card
+                                    </label>
+                                    <input placeholder="Name on card"
+                                           class="field__input" type="text"
+                                           name="card_name"
+                                           id="checkout_credit_card_name" required>
+                                </div>
+                            </div>
+                            <div class="field--third field field--required">
+                                <div class="field__input-wrapper">
+                                    <div
+                                        class="field field--required field--show-floating-label">
+                                        <div
+                                            class="field__input-wrapper field__input-wrapper--select">
+                                            <label
+                                                class="field__label field__label--visible"
+                                                for="checkout_payment_expiration_month">
+                                                Expiration month
+                                            </label>
+                                            <select
+                                                class="field__input field__input--select"
+                                                name="expiry_month"
+                                                id="checkout_payment_expiration_month">
+                                                <option value="1">January</option>
+                                                <option value="2">February</option>
+                                                <option value="3">March</option>
+                                                <option value="4">April</option>
+                                                <option value="5">May</option>
+                                                <option value="6">June</option>
+                                                <option value="7">July</option>
+                                                <option value="8">August</option>
+                                                <option value="9">September</option>
+                                                <option value="10">October</option>
+                                                <option value="11">November</option>
+                                                <option value="12">December</option>
+                                            </select>
+                                            <div class="field__caret">
+                                                <svg
+                                                    class="icon-svg icon-svg--color-adaptive-lighter icon-svg--size-10 field__caret-svg"
+                                                    role="presentation"
+                                                    aria-hidden="true"
+                                                    focusable="false">
+                                                    <use
+                                                        xlink:href="#caret-down">
+                                                    </use>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field--third field field--required">
+                                <div class="field__input-wrapper">
+                                    <div
+                                        class="field field--required field--show-floating-label">
+                                        <div
+                                            class="field__input-wrapper field__input-wrapper--select">
+                                            <label
+                                                class="field__label field__label--visible"
+                                                for="checkout_payment_expiration_year">
+                                                Expiration month
+                                            </label>
+                                            <select
+                                                class="field__input field__input--select"
+                                                name="expiry_year"
+                                                id="checkout_payment_expiration_year">
+                                                <option value="2021">2021</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                                <option value="2025">2025</option>
+                                                <option value="2026">2026</option>
+                                                <option value="2027">2027</option>
+                                                <option value="2028">2028</option>
+                                            </select>
+                                            <div class="field__caret">
+                                                <svg
+                                                    class="icon-svg icon-svg--color-adaptive-lighter icon-svg--size-10 field__caret-svg"
+                                                    role="presentation"
+                                                    aria-hidden="true"
+                                                    focusable="false">
+                                                    <use
+                                                        xlink:href="#caret-down">
+                                                    </use>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field--third field field--required">
+                                <div class="field__input-wrapper">
+                                    <div
+                                        class="field field--required field--show-floating-label">
+                                        <div
+                                            class="field__input-wrapper field__input-wrapper--select">
+                                            <label
+                                                class="field__label field__label--visible"
+                                                for="checkout_credit_card_cvv">
+                                                CVV
+                                            </label>
+                                            <input placeholder="CVV"
+                                                   class="field__input"
+                                                   type="number" name="card_cvv"
+                                                   id="checkout_credit_card_cvv"
+                                                   required="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="step__footer" data-step-footer="">
+    <div class="shown-if-js">
+        <button name="button" type="submit" id="continue_button"
+                class="step__footer__continue-btn btn" aria-busy="false">
+            <span class="btn__content" data-continue-button-content="true">
+                Pay now
+            </span>
+            <svg
+                class="icon-svg icon-svg--size-18 btn__spinner icon-svg--spinner-button"
+                aria-hidden="true" focusable="false">
+                <use xlink:href="#spinner-button"></use>
+            </svg>
+        </button>
+    </div>
+    <a class="step__footer__previous-link"
+       href="/Checkout/Shipping">
+        <svg focusable="false" aria-hidden="true"
+             class="icon-svg icon-svg--color-accent icon-svg--size-10 previous-link__icon"
+             role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+            <path d="M8 1L7 0 3 4 2 5l1 1 4 4 1-1-4-4"></path>
+        </svg>
+        <span class="step__footer__previous-link-content">
+            Return to shipping
+        </span>
+    </a>
+</div>
+</form>
+</div>
+</div>
+</main>

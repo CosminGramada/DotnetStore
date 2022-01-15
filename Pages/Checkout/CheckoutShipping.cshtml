@@ -28,7 +28,7 @@
                                         }
                                         else
                                         {
-                                            <bdo dir="ltr">@Model.UserAddress.User.Email</bdo>
+                                            <bdo dir="ltr">@Model.CheckoutUserInformation.Email</bdo>
                                         }
                                     </div>
                                 </div>
@@ -51,11 +51,11 @@
                                     </div>
                                     <div role="cell" class="review-block__content">
                                         <address class="address address--tight">
-                                            @Html.DisplayFor(m => m.UserAddress.Address1),
-                                            @Html.DisplayFor(m => m.UserAddress.Address2),
-                                            @Html.DisplayFor(m => m.UserAddress.Zip)
-                                            @Html.DisplayFor(m => m.UserAddress.City),
-                                            @Html.DisplayFor(m => m.UserAddress.Country.Name),
+                                            @Html.DisplayFor(m => m.CheckoutUserInformation.Address1),
+                                            @Html.DisplayFor(m => m.CheckoutUserInformation.Address2),
+                                            @Html.DisplayFor(m => m.CheckoutUserInformation.Zip)
+                                            @Html.DisplayFor(m => m.CheckoutUserInformation.City),
+                                            @Html.DisplayFor(m => m.CheckoutUserInformation.Country.Name)
                                             <address>
                                             </address>
                                         </address>
@@ -80,70 +80,89 @@
                     </div>
                     <div class="section__content">
                         <div class="content-box">
-                            <div class="content-box__row">
-                                <div class="radio-wrapper">
-                                    <div class="radio__input">
-                                        <input class="input-radio" type="radio"
-                                               value="Free"
-                                               name="shipping_method"
-                                               id="checkout_shipping_rate_id_free"
-                                               checked="checked">
-                                    </div>
-                                    <label class="radio__label"
-                                           for="checkout_shipping_rate_id_free">
-                                        <span class="radio__label__primary">
-                                            Free (2-3 weeks)
-                                        </span>
-                                        <span class="radio__label__accessory">
-                                            <span class="content-box__emphasis">
-                                                Free
+                            @foreach (var shipping in @Model.ShippingOptions)
+                            {
+                                <div class="content-box__row">
+                                    <div class="radio-wrapper">
+                                        <div class="radio__input">
+                                            @if (shipping.Rate == 0)
+                                            {
+                                                <input class="input-radio" type="radio"
+                                                       asp-for="ShippingMethod"
+                                                       id="@shipping.Name"
+                                                       value="@shipping.Name" checked>
+                                            }
+                                            else
+                                            {
+                                                <input class="input-radio" type="radio"
+                                                       asp-for="ShippingMethod"
+                                                       value="@shipping.Name">    
+                                            }
+                                        </div>
+                                        <label class="radio__label"
+                                               for="@shipping.Name">
+                                            <span class="radio__label__primary">
+                                                @Html.DisplayFor(m => shipping.Description)
                                             </span>
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="content-box__row">
-                                <div class="radio-wrapper">
-                                    <div class="radio__input">
-                                        <input class="input-radio" type="radio"
-                                               value="Standard"
-                                               name="shipping_method"
-                                               id="checkout_shipping_rate_id_standard">
-                                    </div>
-                                    <label class="radio__label"
-                                           for="checkout_shipping_rate_id_standard">
-                                        <span class="radio__label__primary">
-                                            Standard (6-7 days)
-                                        </span>
-                                        <span class="radio__label__accessory">
-                                            <span class="content-box__emphasis">
-                                                $20.57
+                                            <span class="radio__label__accessory">
+                                                <span class="content-box__emphasis">
+                                                    @if (shipping.Rate == 0)
+                                                    {
+                                                        @Html.Raw("Free")
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayFor(m => shipping.Rate)
+                                                    }
+                                                </span>
                                             </span>
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="content-box__row">
-                                <div class="radio-wrapper">
-                                    <div class="radio__input">
-                                        <input class="input-radio" type="radio"
-                                               value="Express"
-                                               name="shipping_method"
-                                               id="checkout_shipping_rate_id_express">
+                                        </label>
                                     </div>
-                                    <label class="radio__label"
-                                           for="checkout_shipping_rate_id_express">
-                                        <span class="radio__label__primary">
-                                            Express (1-2 days)
-                                        </span>
-                                        <span class="radio__label__accessory">
-                                            <span class="content-box__emphasis">
-                                                $49.80
-                                            </span>
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
+                                </div>    
+                            }
+                            
+                            @* <div class="content-box__row"> *@
+                            @*     <div class="radio-wrapper"> *@
+                            @*         <div class="radio__input"> *@
+                            @*             <input class="input-radio" type="radio" *@
+                            @*                    value="Standard" *@
+                            @*                    name="shipping_method" *@
+                            @*                    id="checkout_shipping_rate_id_standard"> *@
+                            @*         </div> *@
+                            @*         <label class="radio__label" *@
+                            @*                for="checkout_shipping_rate_id_standard"> *@
+                            @*             <span class="radio__label__primary"> *@
+                            @*                 Standard (6-7 days) *@
+                            @*             </span> *@
+                            @*             <span class="radio__label__accessory"> *@
+                            @*                 <span class="content-box__emphasis"> *@
+                            @*                     $20.57 *@
+                            @*                 </span> *@
+                            @*             </span> *@
+                            @*         </label> *@
+                            @*     </div> *@
+                            @* </div> *@
+                            @* <div class="content-box__row"> *@
+                            @*     <div class="radio-wrapper"> *@
+                            @*         <div class="radio__input"> *@
+                            @*             <input class="input-radio" type="radio" *@
+                            @*                    value="Express" *@
+                            @*                    name="shipping_method" *@
+                            @*                    id="checkout_shipping_rate_id_express"> *@
+                            @*         </div> *@
+                            @*         <label class="radio__label" *@
+                            @*                for="checkout_shipping_rate_id_express"> *@
+                            @*             <span class="radio__label__primary"> *@
+                            @*                 Express (1-2 days) *@
+                            @*             </span> *@
+                            @*             <span class="radio__label__accessory"> *@
+                            @*                 <span class="content-box__emphasis"> *@
+                            @*                     $49.80 *@
+                            @*                 </span> *@
+                            @*             </span> *@
+                            @*         </label> *@
+                            @*     </div> *@
+                            @* </div> *@
                         </div>
                     </div>
                 </div>

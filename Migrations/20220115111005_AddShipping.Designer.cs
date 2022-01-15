@@ -3,6 +3,7 @@ using System;
 using DotnetStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DotnetStore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220115111005_AddShipping")]
+    partial class AddShipping
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -377,44 +379,12 @@ namespace DotnetStore.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<decimal>("Rate")
-                        .HasColumnType("decimal(65,30)");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
                     b.ToTable("ShippingOptions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("69ba739d-d8cd-4ca5-82ee-9df8f778b679"),
-                            CreatedAt = new DateTime(2022, 1, 15, 13, 15, 35, 890, DateTimeKind.Local).AddTicks(2120),
-                            Description = "Free (2-3 weeks)",
-                            Name = "Free",
-                            Rate = 0m,
-                            UpdatedAt = new DateTime(2022, 1, 15, 13, 15, 35, 890, DateTimeKind.Local).AddTicks(2120)
-                        },
-                        new
-                        {
-                            Id = new Guid("c82493ac-4f9d-4f6b-9a85-f12015f8ae9b"),
-                            CreatedAt = new DateTime(2022, 1, 15, 13, 15, 35, 890, DateTimeKind.Local).AddTicks(2120),
-                            Description = "Standard (6-7 days)",
-                            Name = "Standard",
-                            Rate = 20.57m,
-                            UpdatedAt = new DateTime(2022, 1, 15, 13, 15, 35, 890, DateTimeKind.Local).AddTicks(2120)
-                        },
-                        new
-                        {
-                            Id = new Guid("992c3278-91c3-4ea1-b598-cce842b37bda"),
-                            CreatedAt = new DateTime(2022, 1, 15, 13, 15, 35, 890, DateTimeKind.Local).AddTicks(2120),
-                            Description = "Express (1-2 days)",
-                            Name = "Express",
-                            Rate = 49.8m,
-                            UpdatedAt = new DateTime(2022, 1, 15, 13, 15, 35, 890, DateTimeKind.Local).AddTicks(2120)
-                        });
                 });
 
             modelBuilder.Entity("DotnetStore.Models.UserAddress", b =>

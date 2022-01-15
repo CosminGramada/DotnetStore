@@ -5,7 +5,7 @@ $(document).ready(function () {
     let shippingSpan;
     let totalPaymentSpan;
     let currentTotalPayment;
-    if (urlPathName !== "/checkout/payment") {
+    if (urlPathName !== "/Checkout/Payment") {
         let defaultShippingInfo = $(this).find(':checked').parents('div.content-box__row').find('span.content-box__emphasis');
         shippingSpan = $(this).find('td.total-line__price span.order-summary__small-text');
         totalPaymentSpan = $(this).find('span.payment-due__price');
@@ -25,10 +25,10 @@ $(document).ready(function () {
         }
     }
 
-    $("input.input-checkbox").change(function (e) {
+    $("#CheckoutInfo_CreateAccountFlag").change(function (e) {
         e.preventDefault();
 
-        const passwordField = $(this).parents('div.address-fields').find('#checkout_shipping_password').parents('.field.field--optional');
+        const passwordField = $(this).parents('div.address-fields').find('#CheckoutInfo_Password').parents('.field.field--optional');
 
         if (this.checked === true) {
             passwordField.removeClass('visually-hidden');

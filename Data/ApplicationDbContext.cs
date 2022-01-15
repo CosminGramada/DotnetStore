@@ -53,4 +53,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<Discount> Discounts { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductVariant> ProductVariants { get; set; }
+    public DbSet<ShippingOption> ShippingOptions { get; set; }
 }

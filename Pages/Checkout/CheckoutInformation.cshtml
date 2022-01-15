@@ -35,16 +35,10 @@
             <div class="fieldset">
                 <div class="field field--email_or_phone">
                     <div class="field__input-wrapper">
-                        <label class="field__label field__label--visible"
-                               for="checkout_email">
+                        <label class="field__label field__label--visible" asp-for="CheckoutInfo.Email">
                             Email address
                         </label>
-                        <input value="@Model.GuestEmail"
-                               placeholder="Email address"
-                               aria-describedby="checkout-context-step-one"
-                               aria-required="true"
-                               class="field__input" type="email" name="email"
-                               id="checkout_email" required>
+                        <input asp-for="CheckoutInfo.Email" class="field__input" placeholder="Email address"/>
                     </div>
                 </div>
             </div>
@@ -81,90 +75,64 @@ else
                      data-address-field="first_name">
                     <div class="field__input-wrapper">
                         <label class="field__label field__label--visible"
-                               for="checkout_shipping_address_first_name">
+                               asp-for="CheckoutInfo.FirstName">
                             First name
                         </label>
-                        <input placeholder="First name" class="field__input"
-                               type="text" name="first_name"
-                               value="@Model.UserAddress?.FirstName"
-                               id="checkout_shipping_address_first_name" required>
+                        <input placeholder="First name" class="field__input" asp-for="CheckoutInfo.FirstName">
                     </div>
                 </div>
                 <div class="field field--required field--half"
                      data-address-field="last_name">
                     <div class="field__input-wrapper">
                         <label class="field__label field__label--visible"
-                               for="checkout_shipping_address_last_name">
+                               asp-for="CheckoutInfo.LastName">
                             Last name
                         </label>
-                        <input placeholder="Last name" class="field__input"
-                               type="text"
-                               value="@Model.UserAddress?.LastName"
-                               name="last_name"
-                               id="checkout_shipping_address_last_name" required>
+                        <input placeholder="Last name" class="field__input" asp-for="CheckoutInfo.LastName">
                     </div>
                 </div>
                 <div class="field field--required">
                     <div class="field__input-wrapper">
                         <label class="field__label field__label--visible"
-                               for="checkout_shipping_address_address1">
+                               asp-for="CheckoutInfo.Address1">
                             Address
                         </label>
-                        <input placeholder="Address" class="field__input"
-                               type="text" value="@Model.UserAddress?.Address1"
-                               name="address1"
-                               id="checkout_shipping_address_address1" required>
+                        <input placeholder="Address" class="field__input" asp-for="CheckoutInfo.Address1">
                     </div>
                 </div>
                 <div data-address-field="address2"
                      class="field field--optional">
                     <div class="field__input-wrapper">
-                        <label class="field__label field__label--visible"
-                               for="checkout_shipping_address_address2">
+                        <label class="field__label field__label--visible" asp-for="CheckoutInfo.Address2">
                             Apartment, suite, etc. (optional)
                         </label>
-                        <input placeholder="Apartment, suite, etc. (optional)"
-                               value="@Model.UserAddress?.Address2"
-                               class="field__input" size="30" type="text"
-                               name="address2"
-                               id="checkout_shipping_address_address2">
+                        <input placeholder="Apartment, suite, etc. (optional)" class="field__input" 
+                               asp-for="CheckoutInfo.Address2">
                     </div>
                 </div>
                 <div class="field field--required field--half">
                     <div class="field__input-wrapper">
-                        <label class="field__label field__label--visible"
-                               for="checkout_shipping_address_zip">
+                        <label class="field__label field__label--visible" asp-for="CheckoutInfo.Zip">
                             Postal code
                         </label>
-                        <input placeholder="Postal code"
-                               value="@Model.UserAddress?.Zip"
-                               class="field__input field__input--zip" type="text"
-                               name="zip"
-                               id="checkout_shipping_address_zip" required>
+                        <input placeholder="Postal code" class="field__input field__input--zip" asp-for="CheckoutInfo.Zip">
                     </div>
                 </div>
                 <div class="field field--required field--half">
                     <div class="field__input-wrapper">
-                        <label class="field__label field__label--visible"
-                               for="checkout_shipping_address_city">
+                        <label class="field__label field__label--visible" asp-for="CheckoutInfo.City">
                             City
                         </label>
-                        <input placeholder="City" class="field__input" type="text"
-                               value="@Model.UserAddress?.City"
-                               name="city" id="checkout_shipping_address_city"
-                               required>
+                        <input placeholder="City" class="field__input"  asp-for="CheckoutInfo.City">
                     </div>
                 </div>
                 <div class="field field--required field--show-floating-label"
                      style="margin-bottom: 15px;">
                     <div class="field__input-wrapper field__input-wrapper--select">
-                        <label class="field__label field__label--visible"
-                               for="checkout_shipping_address_country">
+                        <label class="field__label field__label--visible" asp-for="CheckoutInfo.CountryId">
                             Country
                         </label>
-                        <select class="field__input field__input--select"
-                                name="country"
-                                id="checkout_shipping_address_country"
+                        <select class="field__input field__input--select" asp-for="CheckoutInfo.CountryId"
                                 placeholder="Country"
                                 asp-items="@Model.Countries">
                         </select>
@@ -178,18 +146,16 @@ else
                         </div>
                     </div>
                 </div>
-                @if(@Model.UserAddress?.User == null)
+                @if(@Model.CheckoutUserInformation?.User == null)
                 {
                     <div class="field field--optional visually-hidden">
                         <div class="field__input-wrapper">
                             <label class="field__label field__label--visible"
-                                   for="checkout_shipping_password">
+                                   asp-for="CheckoutInfo.Password">
                                 Password
                             </label>
-                            <input placeholder="Password" value=""
-                                   class="field__input" size="30" type="password"
-                                   name="password"
-                                   id="checkout_shipping_password">
+                            <input placeholder="Password" 
+                                   class="field__input" size="30" asp-for="CheckoutInfo.Password">
                         </div>
                     </div>
                     <div class="checkbox-wrapper" style="margin-left: 7px;">
@@ -197,12 +163,9 @@ else
                             <div class="checkbox__input">
                                 <input name="create_account_at_checkout"
                                        type="hidden" value="0" autocomplete="off">
-                                <input class="input-checkbox" type="checkbox"
-                                       value="1"
-                                       name="create_account_at_checkout"
-                                       id="create_account_at_checkout">
+                                <input class="input-checkbox" asp-for="CheckoutInfo.CreateAccountFlag">
                             </div>
-                            <label class="checkbox__label">
+                            <label class="checkbox__label" asp-for="CheckoutInfo.CreateAccountFlag">
                                 Create an account at checkout
                             </label>
                         </div>

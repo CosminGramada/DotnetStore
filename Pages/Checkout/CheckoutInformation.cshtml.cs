@@ -1,4 +1,3 @@
-using DotnetStore.Areas.Identity.Pages.Account;
 using DotnetStore.Data;
 using DotnetStore.Models;
 using Microsoft.AspNetCore.Identity;
@@ -24,6 +23,9 @@ public class CheckoutInformation : CheckoutPageModel
     }
 
     public SelectList Countries { get; set; }
+    
+    [BindProperty]
+    public CheckoutModel CheckoutInfo { get; set; }
 
     public async Task<IActionResult> OnGetAsync()
     {
@@ -33,71 +35,20 @@ public class CheckoutInformation : CheckoutPageModel
         }
         
         var countries = await _context.Countries.ToListAsync();
-        if (HttpContext.Session.GetString("GuestUserAddress") != null)
-        {
-            var userAddress =
-                JsonConvert.DeserializeObject<UserAddress>(HttpContext.Session.GetString("GuestUserAddress"));
-            Countries = new SelectList(countries, "Id", "Name", userAddress.Country.Id);
-            GuestEmail = userAddress.User.Email;
-        }
-        else
-        {
-            Countries = new SelectList(countries, "Id", "Name");
-            GuestEmail = HttpContext.Session.GetString("GuestEmail");
-        }
-        
-        await GetUserAddress();
+        Countries = new SelectList(countries, "Id", "Name");
+
+        await GetCheckoutUserInformation();
+        CheckoutInfo = CheckoutUserInformation;
 
         return Page();
     }
 
-    public async Task<IActionResult> OnPostAsync()
+    public IActionResult OnPostAsync()
     {
-        var email = Request.Form["email"];
-        var password = Request.Form["password"];
+        var guestUserAddress = CheckoutInfo;
+        guestUserAddress.Country = _context.Countries.Single(c => c.Id == CheckoutInfo.CountryId);
 
-        var userService = new UserService(_userManager, _roleManager, _userStore);
-        var appUser = new ApplicationUser
-        {
-            UserName = email, 
-            Email = email,
-            IsAdmin = false,
-            FirstName = Request.Form["first_name"],
-            LastName = Request.Form["last_name"]
-        };
-        
-        var guestUserAddress = new UserAddress
-        {
-            Address1 = Request.Form["address1"],
-            Address2 = Request.Form["address2"],
-            FirstName = Request.Form["first_name"],
-            LastName = Request.Form["last_name"],
-            Zip = Request.Form["zip"],
-            City = Request.Form["city"],
-            Country = _context.Countries.Single(c => c.Id == Guid.Parse(Request.Form["country"])),
-            User = await _userManager.FindByEmailAsync(email)
-        };
-
-        if (!string.IsNullOrWhiteSpace(password))
-        {
-            var result = await userService.CreateNewUser(appUser, password);
-            if (result.Succeeded)
-            {
-                guestUserAddress.User = await _userManager.FindByEmailAsync(email);
-            }
-            else
-            {
-                GuestEmail = email;
-                HttpContext.Session.SetString("GuestEmail", email);    
-            }
-        }
-        else
-        {
-            GuestEmail = email;
-            HttpContext.Session.SetString("GuestEmail", email);    
-        }
-
-        HttpContext.Session.SetString("GuestUserAddress", JsonConvert.SerializeObject(guestUserAddress));
+        HttpContext.Session.SetString("CheckoutInformation", JsonConvert.SerializeObject(guestUserAddress));
 
         return RedirectToPage("./CheckoutShipping");
     }
