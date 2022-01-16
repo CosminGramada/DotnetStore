@@ -217,7 +217,7 @@
                         <th class="total-line__name" scope="row">Subtotal</th>
                         <td class="total-line__price">
                             <span class="order-summary__emphasis">
-                                $@(String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice)))
+                                $@(String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)))
                             </span>
                         </td>
                     </tr>
@@ -263,12 +263,12 @@
                             <span class="payment-due__price">
                                 @if (Context.Session.GetString("CheckoutInformation") != null)
                                 {
-                                    @Html.Raw("$" + String.Format("{0:0.00}", (JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice)) +
+                                    @Html.Raw("$" + String.Format("{0:0.00}", (JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)) +
                                                                               JsonConvert.DeserializeObject<CheckoutModel>(Context.Session.GetString("CheckoutInformation")).ShippingRate))
                                 }
                                 else
                                 {
-                                    @Html.Raw("$" + String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice)))
+                                    @Html.Raw("$" + String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)))
                                 }
                             </span>
                         </td>
@@ -284,12 +284,12 @@
             <span>
                 @if (Context.Session.GetString("CheckoutInformation") != null)
                 {
-                    @Html.Raw("$" + String.Format("{0:0.00}", (JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice)) +
+                    @Html.Raw("$" + String.Format("{0:0.00}", (JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)) +
                                                               JsonConvert.DeserializeObject<CheckoutModel>(Context.Session.GetString("CheckoutInformation")).ShippingRate))
                 }
                 else
                 {
-                    @Html.Raw("$" + String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice)))
+                    @Html.Raw("$" + String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)))
                 }
                 <input type="hidden" value="23.20" name="total_price">
             </span>

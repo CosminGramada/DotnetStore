@@ -25,9 +25,8 @@ public class CheckoutPayment : CheckoutPageModel
     {
         _logger = logger;
     }
-    
-    [BindProperty]
-    public CheckoutPaymentInfo CheckoutPaymentInfo { get; set; }
+
+    [BindProperty] public CheckoutPaymentInfo CheckoutPaymentInfo { get; set; }
 
     public async Task<IActionResult> OnGetAsync()
     {
@@ -39,7 +38,7 @@ public class CheckoutPayment : CheckoutPageModel
     {
         await GetCheckoutUserInformation();
         ApplicationUser user = null;
-        if (CheckoutUserInformation.CreateAccountFlag)
+        if (!_signInManager.IsSignedIn(User) && CheckoutUserInformation.CreateAccountFlag)
         {
             var userService = new UserService(_userManager, _roleManager, _userStore);
             var appUser = new ApplicationUser
@@ -57,9 +56,34 @@ public class CheckoutPayment : CheckoutPageModel
             }
             else
             {
-                user = await _userManager.FindByEmailAsync(CheckoutUserInformation.Email);    
+                user = await _userManager.FindByEmailAsync(CheckoutUserInformation.Email);
             }
         }
+        else
+        {
+            user = await _userManager.FindByNameAsync(User.Identity.Name);
+        }
+
+        if (
+            _signInManager.IsSignedIn(User) &&
+            _context.UserAddresses.FirstOrDefault(u => u.UserId == user.Id && u.IsDefault) == null ||
+            CheckoutUserInformation.CreateAccountFlag)
+        {
+            _context.Add(new UserAddress
+            {
+                Id = Guid.NewGuid(),
+                FirstName = CheckoutUserInformation.FirstName,
+                LastName = CheckoutUserInformation.LastName,
+                Address1 = CheckoutUserInformation.Address1,
+                Address2 = CheckoutUserInformation.Address2,
+                City = CheckoutUserInformation.City,
+                Zip = CheckoutUserInformation.Zip,
+                CountryId = CheckoutUserInformation.CountryId,
+                IsDefault = true,
+                UserId = user.Id
+            });
+        }
+
 
         var acceptedPaymentList = await _context.Payments.ToListAsync();
         var cardOnFile = acceptedPaymentList.FirstOrDefault(p =>
@@ -84,13 +108,14 @@ public class CheckoutPayment : CheckoutPageModel
             User = user,
             OrderStatus = orderStatus,
             UserId = user?.Id,
-            Total = (decimal) cartSessionItems.Sum(c => c.Product.DiscountedPrice) + CheckoutUserInformation.ShippingRate,
+            Total = (decimal) cartSessionItems.Sum(c => c.Product.DiscountedPrice * c.Quantity) +
+                    CheckoutUserInformation.ShippingRate,
             ShippingMethod = CheckoutUserInformation.ShippingMethod,
-            ShippingRate = CheckoutUserInformation.ShippingRate
+            ShippingRate = CheckoutUserInformation.ShippingRate,
+            Note = HttpContext.Session.GetString("ShoppingCartNote")
         };
 
         _context.Add(order);
-
         foreach (var item in cartSessionItems)
         {
             _context.ProductVariants.Single(v =>
@@ -110,7 +135,8 @@ public class CheckoutPayment : CheckoutPageModel
         }
 
         await _context.SaveChangesAsync();
-        
+
+        var userAddress = _context.UserAddresses.Single(u => u.UserId == user.Id && u.IsDefault);
         HttpContext.Session.Remove("ShoppingSessionId");
 
         return RedirectToPage("./OrderDetails", new {id = order.Id});

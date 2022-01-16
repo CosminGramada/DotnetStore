@@ -31,6 +31,7 @@ namespace  DotnetStore.Areas.Identity.Pages.Account.Manage
         public static string ChangePassword => "ChangePassword";
         
         public static string Addresses => "Addresses";
+        public static string Orders => "Orders";
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -51,6 +52,7 @@ namespace  DotnetStore.Areas.Identity.Pages.Account.Manage
         public static string ChangePasswordNavClass(ViewContext viewContext) => PageNavClass(viewContext, ChangePassword);
         
         public static string AddressesNavClass(ViewContext viewContext) => PageNavClass(viewContext, Addresses);
+        public static string OrdersNavClass(ViewContext viewContext) => PageNavClass(viewContext, Orders);
         
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used

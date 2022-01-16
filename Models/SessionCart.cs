@@ -8,4 +8,5 @@ public class SessionCart
     public ProductSize ProductSize { get; set; }
     public ProductColor ProductColor { get; set; }
     public int Quantity { get; set; }
+    public string Note { get; set; }
 }

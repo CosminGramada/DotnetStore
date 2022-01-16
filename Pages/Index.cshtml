@@ -33,7 +33,61 @@
                 </div>
             </div>
             <ul class="items-grid list-unstyled row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3 row-cols-xxl-6 g-3 g-sm-3 g-xl-4">
+                @foreach (var item in @Model.FeaturedProducts)
+                {
+                    <li class="product-item col pb-5 text-center">
+                        <!-- Product Image -->
+                        <a class="product-image d-block text-decoration-none" href="/Products/ProductDetails?id=@item.Id">
+                            <img class="product-item-img img-fluid mb-0 img-thumbnail"
+                                 src="~/images/@item.ProductImage.Name"
+                                 width="480" height="480" loading="lazy"
+                                 style="min-width: 180px; min-height: 180px; max-width: 180px; max-height: 180px;" alt="">
 
+                            <h3 class="product-item-title h5 mb-1" style="margin-top: 1rem;">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </h3>
+                            @if (item.Quantity == 0)
+                            {
+                                <p class="product-item-price mb-1">
+                                    <span class="price">
+                                        $@Html.DisplayFor(modelItem => item.Price)
+                                    </span>
+                                </p>
+                                <span class="badge-sold-out badge text-uppercase">
+                                    Sold Out
+                                </span>
+                            }
+                            else if (item.Price != item.DiscountedPrice)
+                            {
+                                <p class="product-item-price mb-1">
+                                    <s class="price-compare text-muted me-1">
+                                        <span class="visually-hidden">
+                                            Old price
+                                        </span>
+                                        $@Html.DisplayFor(modelItem => item.Price)
+                                    </s>
+                                    <span class="price">
+                                        $@Html.DisplayFor(modelItem => item.DiscountedPrice)
+                                    </span>
+                                </p>
+                                <span class="badge-sale badge text-uppercase">
+                                    <span class="visually-hidden">
+                                        Discount:
+                                    </span>
+                                    Sale
+                                </span>
+                            }
+                            else
+                            {
+                                <p class="product-item-price mb-1">
+                                    <span class="price">
+                                        $@Html.DisplayFor(modelItem => item.Price)
+                                    </span>
+                                </p>
+                            }
+                        </a>
+                    </li>
+                }
             </ul>
         </div>
     </section>
@@ -53,7 +107,7 @@
             <ul class="collection-list-grid list-unstyled row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-4 g-3 g-sm-3 g-xl-4">
                 <!-- Collection -->
                 <li class="collection-list-item pb-5 text-center col-4">
-                    <a class="d-block text-decoration-none" href="{{ route('products.women') }}">
+                    <a class="d-block text-decoration-none" href="/Collections/Women">
                         <!-- Collection Image -->
                         <img class="collection-list-item-img img-fluid mb-3 img-thumbnail"
                              src="~/assets/collection-women.png"
@@ -63,13 +117,13 @@
                             <span>Women</span>
                             <!-- Product count -->
                             <small>
-                                (1)
+                                (@Html.Raw(Model.WomenProductsCount))
                             </small>
                         </h3>
                     </a>
                 </li>
                 <li class="collection-list-item pb-5 text-center col-4">
-                    <a class="d-block text-decoration-none" href="{{ route('products.men') }}">
+                    <a class="d-block text-decoration-none" href="/Collections/Men">
                         <!-- Collection Image -->
                         <img class="collection-list-item-img img-fluid mb-3 img-thumbnail"
                              src="~/assets/collection-men.png"
@@ -79,13 +133,13 @@
                             <span>Men</span>
                             <!-- Product count -->
                             <small>
-                                (2)
+                                (@Html.Raw(Model.MenProductsCount))
                             </small>
                         </h3>
                     </a>
                 </li>
                 <li class="collection-list-item pb-5 text-center col-4">
-                    <a class="d-block text-decoration-none" href="{{ route('products.unisex') }}">
+                    <a class="d-block text-decoration-none" href="/Collections/Unisex">
                         <!-- Collection Image -->
                         <img class="collection-list-item-img img-fluid mb-3 img-thumbnail"
                              src="~/assets/collection-unisex.png"
@@ -95,7 +149,7 @@
                             <span>Unisex</span>
                             <!-- Product count -->
                             <small>
-                                (3)
+                                (@Html.Raw(Model.UnisexProductsCount))
                             </small>
                         </h3>
                     </a>

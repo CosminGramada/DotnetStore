@@ -36,10 +36,9 @@ public class UserAddress: BaseEntity
     [Required]
     public string Zip { get; set; }
     
-    [Required]
     [Display(Name = "Phone number")]
     [Phone]
-    public string PhoneNumber { get; set; }
+    public string? PhoneNumber { get; set; }
     
     [Display(Name = "Set as default address")]
     public bool IsDefault { get; set; }

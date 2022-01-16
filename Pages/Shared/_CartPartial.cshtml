@@ -58,7 +58,7 @@
                                 Subtotal:
                             </span>
                             <b>
-                                $@(String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice)))
+                                $@(String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)))
                             </b>
                         </p>
                         <div class="d-flex justify-content-center mx-n1">
@@ -66,10 +66,9 @@
                                href="/Cart">
                                 View cart
                             </a>
-                            <button class="minicart-checkout-btn btn btn-primary w-100 m-1"
-                                    type="submit" name="checkout">
+                            <a class="minicart-checkout-btn btn btn-primary w-100 m-1" type="button" href="/Checkout/Information">
                                 Checkout
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </form>
@@ -85,7 +84,7 @@
                     Your cart is currently empty.
                 </p>
                 <a class="btn d-block btn-sm btn-outline-primary active"
-                   href="{{ route('products.all') }}">
+                   href="/Collections/AllProducts">
                     Browse all products
                 </a>
             </div>

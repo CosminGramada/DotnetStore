@@ -26,6 +26,7 @@ public class Cart : PageModel
 
     public IActionResult OnPost()
     {
+        HttpContext.Session.SetString("ShoppingCartNote", Request.Form["note"]);
         return RedirectToPage("./CheckoutInformation");
     }
 }

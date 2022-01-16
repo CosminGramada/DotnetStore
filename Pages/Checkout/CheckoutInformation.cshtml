@@ -146,7 +146,7 @@ else
                         </div>
                     </div>
                 </div>
-                @if(@Model.CheckoutUserInformation?.User == null)
+                @if(!SignInManager.IsSignedIn(User))
                 {
                     <div class="field field--optional visually-hidden">
                         <div class="field__input-wrapper">

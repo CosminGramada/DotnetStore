@@ -105,11 +105,11 @@
                                         <span>
                                             Subtotal
                                         </span>
-                                        @if (JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.Price) == JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice))
+                                        @if (JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.Price * s.Quantity) == JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity))
                                         {
                                             <span id="cart-subtotal" class="d-block">
                                                 <strong>
-                                                    $@(String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.Price)))
+                                                    $@(String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.Price * s.Quantity)))
                                                 </strong>
                                             </span>
                                         }
@@ -117,10 +117,10 @@
                                         {
                                             <span id="cart-subtotal" class="d-block">
                                                 <s class="text-muted d-inline-block me-1">
-                                                    $@(String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.Price)))
+                                                    $@(String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.Price * s.Quantity)))
                                                 </s>
                                                 <strong>
-                                                    $@(String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice)))
+                                                    $@(String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(HttpContext.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)))
                                                 </strong>
                                             </span>
                                         }
@@ -142,7 +142,7 @@
             else
             {
                 <p id="cart-empty" class="alert alert-warning mb-9">
-                    Your cart is currently empty. <a href="{{ route('products.all') }}">Continue shopping »</a>
+                    Your cart is currently empty. <a href="/Collections/AllProducts">Continue shopping »</a>
                 </p>
             }
         </div>

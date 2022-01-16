@@ -2,6 +2,7 @@ using DotnetStore.Data;
 using DotnetStore.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace DotnetStore.Pages.Checkout;
@@ -28,8 +29,21 @@ public class CheckoutPageModel: PageModel
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var userAddress = _context
                 .UserAddresses
-                .Single(u => u.UserId == user.Id && u.IsDefault);
-            CheckoutUserInformation = (CheckoutModel) userAddress;
+                .Include(u => u.Country)
+                .FirstOrDefault(u => u.UserId == user.Id && u.IsDefault);
+            if (userAddress != null)
+            {
+                var ua = JsonConvert.SerializeObject(userAddress);
+                CheckoutUserInformation = JsonConvert.DeserializeObject<CheckoutModel>(ua);
+            }
+            else
+            {
+                var sessionUserAddress = HttpContext.Session.GetString("CheckoutInformation");
+                if (sessionUserAddress != null)
+                {
+                    CheckoutUserInformation = JsonConvert.DeserializeObject<CheckoutModel>(HttpContext.Session.GetString("CheckoutInformation"));
+                }
+            }
         }
         else
         {
