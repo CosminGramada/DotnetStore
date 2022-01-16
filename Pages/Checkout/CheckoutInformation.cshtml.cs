@@ -10,15 +10,8 @@ namespace DotnetStore.Pages.Checkout;
 
 public class CheckoutInformation : CheckoutPageModel
 {
-    private readonly RoleManager<ApplicationRole> _roleManager;
-    private readonly IUserStore<ApplicationUser> _userStore;
-    
-    public CheckoutInformation(
-        ApplicationDbContext context, 
-        SignInManager<ApplicationUser> signInManager, 
-        UserManager<ApplicationUser> userManager,
-        RoleManager<ApplicationRole> roleManager
-        ) : base(context, signInManager, userManager)
+    public CheckoutInformation(ApplicationDbContext context, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager) : 
+        base(context, signInManager, userManager)
     {
     }
 

@@ -128,14 +128,11 @@
                                 <div class="field__input-wrapper">
                                     <label
                                         class="field__label field__label--visible"
-                                        for="checkout_credit_card_number">
+                                        asp-for="CheckoutPaymentInfo.CardNumber">
                                         Card number
                                     </label>
                                     <input placeholder="Card number"
-                                           class="field__input" type="number"
-                                           name="card_number"
-                                           id="checkout_credit_card_number"
-                                           required>
+                                           class="field__input" asp-for="CheckoutPaymentInfo.CardNumber">
                                 </div>
                             </div>
                             <div
@@ -143,13 +140,11 @@
                                 <div class="field__input-wrapper">
                                     <label
                                         class="field__label field__label--visible"
-                                        for="checkout_credit_card_name">
+                                        asp-for="CheckoutPaymentInfo.CardName">
                                         Name on card
                                     </label>
                                     <input placeholder="Name on card"
-                                           class="field__input" type="text"
-                                           name="card_name"
-                                           id="checkout_credit_card_name" required>
+                                           class="field__input" asp-for="CheckoutPaymentInfo.CardName">
                                 </div>
                             </div>
                             <div class="field--third field field--required">
@@ -160,13 +155,10 @@
                                             class="field__input-wrapper field__input-wrapper--select">
                                             <label
                                                 class="field__label field__label--visible"
-                                                for="checkout_payment_expiration_month">
+                                                asp-for="CheckoutPaymentInfo.ExpiryMonth">
                                                 Expiration month
                                             </label>
-                                            <select
-                                                class="field__input field__input--select"
-                                                name="expiry_month"
-                                                id="checkout_payment_expiration_month">
+                                            <select class="field__input field__input--select" asp-for="CheckoutPaymentInfo.ExpiryMonth">
                                                 <option value="1">January</option>
                                                 <option value="2">February</option>
                                                 <option value="3">March</option>
@@ -203,13 +195,10 @@
                                             class="field__input-wrapper field__input-wrapper--select">
                                             <label
                                                 class="field__label field__label--visible"
-                                                for="checkout_payment_expiration_year">
-                                                Expiration month
+                                                asp-for="CheckoutPaymentInfo.ExpiryYear">
+                                                Expiration Year
                                             </label>
-                                            <select
-                                                class="field__input field__input--select"
-                                                name="expiry_year"
-                                                id="checkout_payment_expiration_year">
+                                            <select class="field__input field__input--select" asp-for="CheckoutPaymentInfo.ExpiryYear">
                                                 <option value="2021">2021</option>
                                                 <option value="2022">2022</option>
                                                 <option value="2023">2023</option>
@@ -242,14 +231,12 @@
                                             class="field__input-wrapper field__input-wrapper--select">
                                             <label
                                                 class="field__label field__label--visible"
-                                                for="checkout_credit_card_cvv">
+                                                asp-for="CheckoutPaymentInfo.Cvv">
                                                 CVV
                                             </label>
                                             <input placeholder="CVV"
                                                    class="field__input"
-                                                   type="number" name="card_cvv"
-                                                   id="checkout_credit_card_cvv"
-                                                   required="">
+                                                   asp-for="CheckoutPaymentInfo.Cvv">
                                         </div>
                                     </div>
                                 </div>

@@ -28,7 +28,7 @@ public class UserService: PageModel
         _emailStore = GetEmailStore();
     }
     
-    public async Task<IdentityResult> CreateNewUser(ApplicationUser applicationUser, string password)
+    public async Task<IdentityResult> CreateNewUserAsync(ApplicationUser applicationUser, string password)
     {
         //Workaround to have the guest user email confirmed
         //normally he will confirm it from the email received

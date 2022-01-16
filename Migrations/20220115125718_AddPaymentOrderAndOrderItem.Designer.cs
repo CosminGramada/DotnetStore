@@ -3,6 +3,7 @@ using System;
 using DotnetStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DotnetStore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220115125718_AddPaymentOrderAndOrderItem")]
+    partial class AddPaymentOrderAndOrderItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,9 +228,6 @@ namespace DotnetStore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<string>("Note")
                         .HasColumnType("longtext");
 
@@ -244,9 +243,6 @@ namespace DotnetStore.Migrations
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(65,30)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("char(36)");
@@ -332,6 +328,30 @@ namespace DotnetStore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Payments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("1a6cce2a-81c0-4713-b19e-a355d80b3a61"),
+                            CardName = "Test Test",
+                            CardNumber = 4111111111111111L,
+                            CreatedAt = new DateTime(2022, 1, 15, 14, 57, 17, 987, DateTimeKind.Local).AddTicks(130),
+                            Cvv = 123,
+                            ExpiryMonth = 12,
+                            ExpiryYear = 2030,
+                            UpdatedAt = new DateTime(2022, 1, 15, 14, 57, 17, 987, DateTimeKind.Local).AddTicks(130)
+                        },
+                        new
+                        {
+                            Id = new Guid("3280f4dd-526a-414e-83f0-9d0d0b145a5c"),
+                            CardName = "Cosmin Gramada",
+                            CardNumber = 4111111111111112L,
+                            CreatedAt = new DateTime(2022, 1, 15, 14, 57, 17, 987, DateTimeKind.Local).AddTicks(130),
+                            Cvv = 123,
+                            ExpiryMonth = 12,
+                            ExpiryYear = 2030,
+                            UpdatedAt = new DateTime(2022, 1, 15, 14, 57, 17, 987, DateTimeKind.Local).AddTicks(130)
+                        });
                 });
 
             modelBuilder.Entity("DotnetStore.Models.Product", b =>

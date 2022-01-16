@@ -25,7 +25,7 @@ namespace DotnetStore.Pages.Admin.Products
             Products = products.Select(s =>
             {
                 s.ProductImage = _context.ProductImages.Single(pi => pi.Id == s.ProductImageId);
-                s.Quantity = base.GetProductQuantity(s);
+                s.Quantity = GetProductQuantity(s);
                 s.DiscountedPrice = GetDiscountedPrice(s);
                 return s;
             }).ToList();

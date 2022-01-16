@@ -1,0 +1,142 @@
+@page "/Order/{id}"
+@using DotnetStore.Enums
+@model DotnetStore.Pages.Checkout.OrderDetails
+
+@{
+    Layout = "Shared/_Layout";
+}
+
+<div id="shopify-section-cart-template" class="shopify-section">
+    <h1 class="text-center mb-3" style="margin-top: auto;margin-bottom: auto;">
+        @if (Model.OrderItems.First().Order.OrderStatus == OrderStatus.PaymentFailed)
+        {
+            <p class="alert alert-danger">
+                Something went wrong with your payment!
+            </p>
+        }
+        else
+        {
+            @Html.Raw("Thank you for your order!")
+        }
+    </h1>
+    <article class="pt-6 container">
+        <h2 class="text-center mb-3" style="margin-top: auto;">Order @Model.OrderItems.First().OrderId</h2>
+        <p class="bg-light py-2 px-3 rounded mb-3 text-muted">
+            Placed on @String.Format("{0:MMMM dd, yyyy}", Model.OrderItems.First().Order.CreatedAt) at @String.Format("{0:HH:mm}", Model.OrderItems.First().Order.CreatedAt)
+        </p>
+        <div class="table-responsive-collapse-lg">
+            <table id="table-order-details" class="table mb-5">
+                <thead class="">
+                <tr>
+                    <th>Product</th>
+                    <th class="text-center">Price</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-right">Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.OrderItems)
+                {
+                    <tr class="responsive-table-row">
+                        <td class="align-middle">
+                            <a class="theme-link-color" href="/Products/ProductDetails?id=@item.Product.Id"
+                               style="margin-right: 50px;">
+                                @Html.DisplayFor(m => item.Product.Name)
+                            </a>
+                            @Html.DisplayFor(m => item.ProductColor.Name)
+                            / @Html.DisplayFor(m => item.ProductSize.Name)
+                        </td>
+                        <td class="text-center align-middle"
+                            width="120">
+                            @Html.Raw(String.Format("${0:0.00}", item.Product.DiscountedPrice))
+                        </td>
+                        <td class="text-center align-middle" width="120">
+                            @Html.Raw(item.Quantity)
+                        </td>
+                        <td class="text-right align-middle"
+                            width="140">
+                            @Html.Raw(String.Format("${0:0.00}", item.Product.DiscountedPrice * item.Quantity))
+                        </td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="4" class="text-right">Subtotal</td>
+                    <td class="text-right">
+                        @Html.Raw(String.Format("${0:0.00}", Model.OrderItems.First().Order.Total - Model.OrderItems.First().Order.ShippingRate))
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="4" class="text-right">
+                        @Html.DisplayFor(m => m.OrderItems.First().Order.ShippingMethod)
+                    </td>
+                    <td class="text-right">
+                        @Html.Raw(String.Format("${0:0.00}", Model.OrderItems.First().Order.ShippingRate))
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="text-right">Total</td>
+                    <td class="text-right">
+                        <strong>USD @Html.Raw(String.Format("${0:0.00}", Model.OrderItems.First().Order.Total))</strong>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="alert alert-info mb-4">
+            <h4 class="h5 alert-heading mb-1" style="margin-top: auto;">Special instructions</h4>
+            <div>{{ $order->note }}</div>
+        </div>
+
+        <div class="row mx-sm-n2">
+            <div class="col-sm mb-3 px-sm-2">
+                <div class="card">
+                    <h3 class="card-header h5" style="margin-top: auto;">Billing address</h3>
+                    <div class="card-body">
+                        <p>
+                            <strong>Payment status: @Html.Raw(Model.OrderItems.First().Order.OrderStatus)</strong>
+                        </p>
+                        @Html.Raw(Model.UserAddress.Address1),
+                        @Html.Raw(Model.UserAddress.Address2),
+                        @Html.Raw(Model.UserAddress.Zip)
+                        @Html.Raw(Model.UserAddress.City),
+                        @Html.Raw(Model.UserAddress.Country.Name)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm mb-3 px-sm-2">
+                <div class="card">
+                    <h3 class="card-header h5" style="margin-top: auto;">Shipping address</h3>
+                    <div class="card-body">
+                        @if(Model.OrderItems.First().Order.OrderStatus == OrderStatus.Created)
+                        {
+                            <p>
+                                <strong>Fulfillment status: In Progress</strong>
+                            </p>
+                        }
+                        else if(Model.OrderItems.First().Order.OrderStatus == OrderStatus.Delivered)
+                        {
+                            <p>
+                                <strong>Fulfillment status: Delivered</strong>
+                            </p>
+                        }
+                        else
+                        {
+                            <p>
+                                <strong>Fulfillment status: Payment Failed</strong>
+                            </p>
+                        }
+                        @Html.Raw(Model.UserAddress.Address1),
+                        @Html.Raw(Model.UserAddress.Address2),
+                        @Html.Raw(Model.UserAddress.Zip)
+                        @Html.Raw(Model.UserAddress.City),
+                        @Html.Raw(Model.UserAddress.Country.Name)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>

@@ -1,4 +1,5 @@
 using DotnetStore.Data;
+using DotnetStore.Helpers;
 using DotnetStore.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -52,7 +53,7 @@ public class ProductPageModel: PageModel
         
     protected decimal GetDiscountedPrice(Product product)
     {
-        return product.Price - 0.1M;
+        return ProductHelper.GetProductDiscountedPrice(_context, product);
     }
 
     protected async Task SaveProductVariantAsync(Guid productId)
