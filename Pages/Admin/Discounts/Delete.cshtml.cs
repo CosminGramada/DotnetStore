@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using DotnetStore.Data;
 using DotnetStore.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DotnetStore.Pages.Admin.Discounts
 {
+    [Authorize(Roles = "Admin")]
     public class DeleteModel : PageModel
     {
         private readonly DotnetStore.Data.ApplicationDbContext _context;

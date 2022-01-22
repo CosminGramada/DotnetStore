@@ -9,7 +9,7 @@
     <li class="nav-item d-none d-lg-block">
         <p id="user-name" class="text-center" style="white-space: nowrap; display: contents;">
             Hi,
-            <strong>@User.Identity?.Name!</strong>
+            <strong>@UserManager.FindByNameAsync(User.Identity.Name).Result.FirstName</strong>
         </p>
     </li>
 }

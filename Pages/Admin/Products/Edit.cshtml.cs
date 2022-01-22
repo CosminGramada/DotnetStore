@@ -1,12 +1,14 @@
 #nullable disable
 using DotnetStore.Data;
 using DotnetStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotnetStore.Pages.Admin.Products
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : ProductPageModel
     {
         public EditModel(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment): 

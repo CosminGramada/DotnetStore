@@ -1,6 +1,7 @@
 #nullable disable
 using DotnetStore.Data;
 using DotnetStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DotnetStore.Pages.Admin.Discounts
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : DiscountPageModel
     {
         public EditModel(ApplicationDbContext context) : base(context)

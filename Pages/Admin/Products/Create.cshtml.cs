@@ -1,11 +1,13 @@
 #nullable disable
 using DotnetStore.Data;
 using DotnetStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DotnetStore.Pages.Admin.Products
 {
+    [Authorize(Roles = "Admin")]
     public class CreateModel : ProductPageModel
     {
         public CreateModel(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment): 

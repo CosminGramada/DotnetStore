@@ -1,10 +1,12 @@
 #nullable disable
 using DotnetStore.Data;
 using DotnetStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotnetStore.Pages.Admin.Products
 {
+    [Authorize(Roles = "Admin")]
     public class IndexModel : ProductPageModel
     {
         public IndexModel(ApplicationDbContext context): base(context)

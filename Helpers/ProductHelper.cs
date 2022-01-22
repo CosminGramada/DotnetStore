@@ -4,11 +4,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DotnetStore.Helpers;
 
-public class ProductHelper
+public static class ProductHelper
 {
     public static decimal GetProductDiscountedPrice(ApplicationDbContext context, Product product)
     {
-        return product.Price - 0.1M;
+        var discount = context.Discounts.FirstOrDefault(d => 
+            d.Id == product.DiscountId &&
+            d.StartDate.CompareTo(DateTime.Now) <= 0 &&
+            d.EndDate.CompareTo(DateTime.Now) >= 0 &&
+            d.DiscountType.Name == "Product"
+        );
+        if (discount == null)
+        {
+            return product.Price;
+        }
+        
+        return product.Price - product.Price * discount.Percent / 100;
     }
 
     public static int GetProductQuantity(ApplicationDbContext context, Product product)

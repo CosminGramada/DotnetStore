@@ -48,4 +48,8 @@
       <UpToDateCheckInput Remove="Areas\Admin\Discounts\Index.cshtml" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Tests" />
+    </ItemGroup>
+
 </Project>
