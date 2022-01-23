@@ -10,7 +10,14 @@
         </span>
 
         <span>
-            Cart
+            @if (@Context.Request.Query["lang"] == "ro")
+            {
+                @Html.Raw("Cos")
+            }
+            else
+            {
+                @Html.Raw("Cart")
+            }
         </span>
         @if (Context.Session.GetString("ShoppingSessionId") != null && JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Quantity) > 0)
         {
@@ -43,7 +50,14 @@
                                             @item.ProductColor.Name / @item.ProductSize.Name
                                         </span>
                                         <span class="price d-block mt-1">
-                                            $@String.Format("{0:0.00}", item.Product.DiscountedPrice)
+                                            @if (@Context.Request.Query["lang"] == "ro")
+                                            {
+                                                @String.Format("{0:0.00 Lei}", item.Product.DiscountedPrice)
+                                            }
+                                            else
+                                            {
+                                                @String.Format("{0:$0.00}", item.Product.DiscountedPrice)
+                                            }
                                         </span>
                                     </div>
                                 </a>
@@ -58,16 +72,37 @@
                                 Subtotal:
                             </span>
                             <b>
-                                $@(String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)))
+                                @if (@Context.Request.Query["lang"] == "ro")
+                                {
+                                    @(String.Format("{0:0.00 Lei}", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)))
+                                }
+                                else
+                                {
+                                    @(String.Format("{0:$0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)))
+                                }
                             </b>
                         </p>
                         <div class="d-flex justify-content-center mx-n1">
                             <a class="minicart-view-cart-btn btn btn-secondary w-100 m-1"
                                href="/Cart">
-                                View cart
+                                @if (@Context.Request.Query["lang"] == "ro")
+                                {
+                                    @Html.Raw("Catre cos")
+                                }
+                                else
+                                {
+                                    @Html.Raw("View cart")
+                                }
                             </a>
                             <a class="minicart-checkout-btn btn btn-primary w-100 m-1" type="button" href="/Checkout/Information">
-                                Checkout
+                                @if (@Context.Request.Query["lang"] == "ro")
+                                {
+                                    @Html.Raw("Plata")
+                                }
+                                else
+                                {
+                                    @Html.Raw("Checkout")
+                                }
                             </a>
                         </div>
                     </div>
@@ -81,11 +116,25 @@
              style="width: auto;">
             <div style="min-width: 260px;">
                 <p class="text-center text-muted">
-                    Your cart is currently empty.
+                    @if (@Context.Request.Query["lang"] == "ro")
+                    {
+                        @Html.Raw("Cosul de cumparaturi este gol.")
+                    }
+                    else
+                    {
+                        @Html.Raw("Your cart is currently empty.")
+                    }
                 </p>
                 <a class="btn d-block btn-sm btn-outline-primary active"
                    href="/Collections/AllProducts">
-                    Browse all products
+                    @if (@Context.Request.Query["lang"] == "ro")
+                    {
+                        @Html.Raw("Vedeti toate produsele")
+                    }
+                    else
+                    {
+                        @Html.Raw("Browse all products")
+                    }
                 </a>
             </div>
         </div>

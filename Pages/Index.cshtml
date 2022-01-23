@@ -2,6 +2,7 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    ViewData["lang"] = "en";
 }
 
 <div id="section" class="section">
@@ -14,7 +15,14 @@
                      alt="" width="1920" height="360" loading="lazy" style="min-height: 360px;">
                 <div class="carousel-caption">
                     <h3 class="h3">
-                        DotnetStore - Modern, Fast and Simple
+                        @if (@Request.Query["lang"] == "ro")
+                        {
+                            @Html.Raw("DotnetStore - Modern, Rapid, Simplu")
+                        }
+                        else
+                        {
+                            @Html.Raw("DotnetStore - Modern, Fast and Simple")
+                        }
                     </h3>
                 </div>
             </div>
@@ -26,10 +34,26 @@
         <div class="container-lg">
             <div class="heading-wrapper mb-3 overflow-hidden">
                 <h2 class="heading mb-1 text-center h2">
-                    Featured collection
+                    @if (@Request.Query["lang"] == "ro")
+                    {
+                        @Html.Raw("Produse recomandate")
+                    }
+                    else
+                    {
+                        @Html.Raw("Featured collection")
+                    }
                 </h2>
                 <div class="subheading rte text-muted  text-center">
-                    <p>A list of featured products</p>
+                    <p>
+                        @if (@Request.Query["lang"] == "ro")
+                        {
+                            @Html.Raw("Lista produselor recomandate")
+                        }
+                        else
+                        {
+                            @Html.Raw("A list of featured products")
+                        }
+                    </p>
                 </div>
             </div>
             <ul class="items-grid list-unstyled row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3 row-cols-xxl-6 g-3 g-sm-3 g-xl-4">
@@ -50,11 +74,25 @@
                             {
                                 <p class="product-item-price mb-1">
                                     <span class="price">
-                                        $@Html.DisplayFor(modelItem => item.Price)
+                                        @if (@Request.Query["lang"] == "ro")
+                                        {
+                                            @Html.Raw(String.Format("{0:0.00 Lei}", item.Price))
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw(String.Format("{0:$0.00}", item.Price))
+                                        }
                                     </span>
                                 </p>
                                 <span class="badge-sold-out badge text-uppercase">
-                                    Sold Out
+                                    @if (@Request.Query["lang"] == "ro")
+                                    {
+                                        @Html.Raw("Indisponibil")
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("Sold Out")
+                                    }
                                 </span>
                             }
                             else if (item.Price != item.DiscountedPrice)
@@ -64,24 +102,52 @@
                                         <span class="visually-hidden">
                                             Old price
                                         </span>
-                                        $@Html.DisplayFor(modelItem => item.Price)
+                                        @if (@Request.Query["lang"] == "ro")
+                                        {
+                                            @Html.Raw(String.Format("{0:0.00 Lei}", item.Price))
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw(String.Format("{0:$0.00}", item.Price))
+                                        }
                                     </s>
                                     <span class="price">
-                                        $@Html.DisplayFor(modelItem => item.DiscountedPrice)
+                                        @if (@Request.Query["lang"] == "ro")
+                                        {
+                                            @Html.Raw(String.Format("{0:0.00 Lei}", item.DiscountedPrice))
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw(String.Format("{0:$0.00}", item.DiscountedPrice))
+                                        }
                                     </span>
                                 </p>
                                 <span class="badge-sale badge text-uppercase">
                                     <span class="visually-hidden">
                                         Discount:
                                     </span>
-                                    Sale
+                                    @if (@Request.Query["lang"] == "ro")
+                                    {
+                                        @Html.Raw("Reducere")
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("Sale")
+                                    }
                                 </span>
                             }
                             else
                             {
                                 <p class="product-item-price mb-1">
                                     <span class="price">
-                                        $@Html.DisplayFor(modelItem => item.Price)
+                                        @if (@Request.Query["lang"] == "ro")
+                                        {
+                                            @Html.Raw(String.Format("{0:0.00 Lei}", item.Price))
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw(String.Format("{0:$0.00}", item.Price))
+                                        }
                                     </span>
                                 </p>
                             }
@@ -97,10 +163,26 @@
         <div class="container-lg">
             <div class="heading-wrapper mb-3 overflow-hidden">
                 <h2 class="heading mb-1 text-center h2">
-                    Collection list
+                    @if (@Request.Query["lang"] == "ro")
+                    {
+                        @Html.Raw("Colectiile noastre")
+                    }
+                    else
+                    {
+                        @Html.Raw("Collection list")
+                    }
                 </h2>
                 <div class="subheading rte text-muted  text-center">
-                    <p>Browser through our collection of items.</p>
+                    <p>
+                        @if (@Request.Query["lang"] == "ro")
+                        {
+                            @Html.Raw("Vedeti colectiile noastre")
+                        }
+                        else
+                        {
+                            @Html.Raw("Browse through our collection of items.")
+                        }
+                    </p>
                 </div>
             </div>
             <!-- Collection list -->
@@ -114,7 +196,16 @@
                              alt="Women" width="480" height="480" loading="lazy">
                         <!-- Collection title -->
                         <h3 class="collection-list-item-title h6 mb-1" style="margin-top: auto;">
-                            <span>Women</span>
+                            <span>
+                                @if (@Request.Query["lang"] == "ro")
+                                {
+                                    @Html.Raw("Femei")
+                                }
+                                else
+                                {
+                                    @Html.Raw("Women")
+                                }
+                            </span>
                             <!-- Product count -->
                             <small>
                                 (@Html.Raw(Model.WomenProductsCount))
@@ -130,7 +221,16 @@
                              alt="Men" width="480" height="480" loading="lazy">
                         <!-- Collection title -->
                         <h3 class="collection-list-item-title h6 mb-1" style="margin-top: auto;">
-                            <span>Men</span>
+                            <span>
+                                @if (@Request.Query["lang"] == "ro")
+                                {
+                                    @Html.Raw("Barbati")
+                                }
+                                else
+                                {
+                                    @Html.Raw("Men")
+                                }
+                            </span>
                             <!-- Product count -->
                             <small>
                                 (@Html.Raw(Model.MenProductsCount))

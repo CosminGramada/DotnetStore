@@ -36,7 +36,16 @@
                 <ol class="breadcrumb " role="list">
                     <ol class="breadcrumb " role="list">
                         <li class="breadcrumb__item breadcrumb__item--completed">
-                            <a class="breadcrumb__link" href="/Cart">Cart</a>
+                            <a class="breadcrumb__link" href="/Cart">
+                                @if (@Context.Request.Query["lang"] == "ro")
+                                {
+                                    @Html.Raw("Cos")
+                                }
+                                else
+                                {
+                                    @Html.Raw("Cart")
+                                }
+                            </a>
                             <svg
                                 class="icon-svg icon-svg--color-adaptive-light icon-svg--size-10 breadcrumb__chevron-icon"
                                 aria-hidden="true" focusable="false">
@@ -46,7 +55,16 @@
                         @if (Context.Request.Path == "/Checkout/Information")
                         {
                             <li class="breadcrumb__item breadcrumb__item--current" aria-current="step">
-                                <span class="breadcrumb__text">Information</span>
+                                <span class="breadcrumb__text">
+                                    @if (@Context.Request.Query["lang"] == "ro")
+                                    {
+                                        @Html.Raw("Informatii")
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("Information")
+                                    }
+                                </span>
                                 <svg
                                     class="icon-svg icon-svg--color-adaptive-light icon-svg--size-10 breadcrumb__chevron-icon"
                                     aria-hidden="true" focusable="false">
@@ -54,7 +72,16 @@
                                 </svg>
                             </li>
                             <li class="breadcrumb__item breadcrumb__item--blank">
-                                <span class="breadcrumb__text">Shipping</span>
+                                <span class="breadcrumb__text">
+                                    @if (@Context.Request.Query["lang"] == "ro")
+                                    {
+                                        @Html.Raw("Livrare")
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("Shipping")
+                                    }
+                                </span>
                                 <svg
                                     class="icon-svg icon-svg--color-adaptive-light icon-svg--size-10 breadcrumb__chevron-icon"
                                     aria-hidden="true" focusable="false">
@@ -62,13 +89,31 @@
                                 </svg>
                             </li>
                             <li class="breadcrumb__item breadcrumb__item--blank">
-                                <span class="breadcrumb__text">Payment</span>
+                                <span class="breadcrumb__text">
+                                    @if (@Context.Request.Query["lang"] == "ro")
+                                    {
+                                        @Html.Raw("Plata")
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("Payment")
+                                    }
+                                </span>
                             </li>
                         }
                         else if (Context.Request.Path == "/Checkout/Shipping")
                         {
                             <li class="breadcrumb__item breadcrumb__item--completed">
-                                <a class="breadcrumb__link" href="/Checkout/Information">Information</a>
+                                <a class="breadcrumb__link" href="/Checkout/Information">
+                                    @if (@Context.Request.Query["lang"] == "ro")
+                                    {
+                                        @Html.Raw("Informatii")
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("Information")
+                                    }
+                                </a>
                                 <svg
                                     class="icon-svg icon-svg--color-adaptive-light icon-svg--size-10 breadcrumb__chevron-icon"
                                     aria-hidden="true" focusable="false">
@@ -76,7 +121,16 @@
                                 </svg>
                             </li>
                             <li class="breadcrumb__item breadcrumb__item--current">
-                                <span class="breadcrumb__text">Shipping</span>
+                                <span class="breadcrumb__text">
+                                    @if (@Context.Request.Query["lang"] == "ro")
+                                    {
+                                        @Html.Raw("Livrare")
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("Shipping")
+                                    }
+                                </span>
                                 <svg
                                     class="icon-svg icon-svg--color-adaptive-light icon-svg--size-10 breadcrumb__chevron-icon"
                                     aria-hidden="true" focusable="false">
@@ -84,13 +138,31 @@
                                 </svg>
                             </li>
                             <li class="breadcrumb__item breadcrumb__item--blank">
-                                <span class="breadcrumb__text">Payment</span>
+                                <span class="breadcrumb__text">
+                                    @if (@Context.Request.Query["lang"] == "ro")
+                                    {
+                                        @Html.Raw("Plata")
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("Payment")
+                                    }
+                                </span>
                             </li>
                         }
                         else
                         {
                             <li class="breadcrumb__item breadcrumb__item--completed">
-                                <a class="breadcrumb__link" href="/Checkout/Information">Information</a>
+                                <a class="breadcrumb__link" href="/Checkout/Information">
+                                    @if (@Context.Request.Query["lang"] == "ro")
+                                    {
+                                        @Html.Raw("Informatii")
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("Information")
+                                    }
+                                </a>
                                 <svg
                                     class="icon-svg icon-svg--color-adaptive-light icon-svg--size-10 breadcrumb__chevron-icon"
                                     aria-hidden="true" focusable="false">
@@ -98,7 +170,16 @@
                                 </svg>
                             </li>
                             <li class="breadcrumb__item breadcrumb__item--completed">
-                                <a class="breadcrumb__link" href="/Checkout/Shipping">Shipping</a>
+                                <a class="breadcrumb__link" href="/Checkout/Shipping">
+                                    @if (@Context.Request.Query["lang"] == "ro")
+                                    {
+                                        @Html.Raw("Livrare")
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("Shipping")
+                                    }
+                                </a>
                                 <svg
                                     class="icon-svg icon-svg--color-adaptive-light icon-svg--size-10 breadcrumb__chevron-icon"
                                     aria-hidden="true" focusable="false">
@@ -106,7 +187,16 @@
                                 </svg>
                             </li>
                             <li class="breadcrumb__item breadcrumb__item--current">
-                                <span class="breadcrumb__text">Payment</span>
+                                <span class="breadcrumb__text">
+                                    @if (@Context.Request.Query["lang"] == "ro")
+                                    {
+                                        @Html.Raw("Plata")
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("Payment")
+                                    }
+                                </span>
                             </li>
                         }
                     </ol>
@@ -128,155 +218,219 @@
     </div>
     <div class="sidebar__content">
     <div id="order-summary" class="order-summary order-summary--is-collapsed" data-order-summary="">
-        <h2 style="margin-top: 75px; margin-bottom: 25px;">
-            Order summary
-        </h2>
-        <div class="order-summary__sections">
-            <div class="order-summary__section order-summary__section--product-list">
-                <div class="order-summary__section__content">
-                    <table class="product-table">
-                        <caption class="visually-hidden">Shopping cart</caption>
-                        <thead class="product-table__header">
-                        <tr>
-                            <th scope="col">
-                                <span class="visually-hidden">Product image</span>
-                            </th>
-                            <th scope="col">
-                                <span class="visually-hidden">Description</span>
-                            </th>
-                            <th scope="col">
-                                <span class="visually-hidden">Quantity</span>
-                            </th>
-                            <th scope="col">
-                                <span class="visually-hidden">Price</span>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody data-order-summary-section="line-items">
-                        @foreach (var item in JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")))
-                        {
-                            <tr class="product">
-                                <td class="product__image">
-                                    <div class="product-thumbnail ">
-                                        <div class="product-thumbnail__wrapper">
-                                            <img class="product-thumbnail__image"
-                                                 src="~/images/@item.Product.ProductImage.Name">
-                                        </div>
-                                        <span class="product-thumbnail__quantity" aria-hidden="true">
-                                            @Html.DisplayFor(m => item.Quantity)
-                                        </span>
-                                    </div>
-                                </td>
-                                <th class="product__description" scope="row">
-                                    <span class="product__description__name order-summary__emphasis">
-                                        @Html.DisplayFor(m => item.Product.Name)
-                                    </span>
-                                    <span
-                                        class="product__description__variant order-summary__small-text">
-                                        @Html.DisplayFor(m => item.ProductColor.Name) / @Html.DisplayFor(m => item.ProductSize.Name)
-                                    </span>
-                                </th>
-                                <td class="product__quantity">
-                                    <span class="visually-hidden">
-                                        @Html.DisplayFor(m => item.Quantity)
-                                    </span>
-                                </td>
-                                <td class="product__price">
-                                    <span class="order-summary__emphasis">
-                                        @Html.Raw("$" + $"{item.Product.DiscountedPrice:0.00}")
-                                    </span>
-                                </td>
-                            </tr>
-                        }
-                        </tbody>
-                    </table>
-                    <div class="order-summary__scroll-indicator" aria-hidden="true" tabindex="-1">
-                        Scroll for more items
-                        <svg aria-hidden="true" focusable="false" class="icon-svg icon-svg--size-12">
-                            <use xlink:href="#down-arrow"></use>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-            <div class="order-summary__section order-summary__section--total-lines"
-                 data-order-summary-section="payment-lines">
-                <table class="total-line-table">
-                    <caption class="visually-hidden">Cost summary</caption>
-                    <thead>
-                    <tr>
-                        <th scope="col">
-                            <span class="visually-hidden">Description</span>
+    <h2 style="margin-top: 75px; margin-bottom: 25px;">
+        @if (@Context.Request.Query["lang"] == "ro")
+        {
+            @Html.Raw("Sumarul comenzii")
+        }
+        else
+        {
+            @Html.Raw("Order summary")
+        }
+    </h2>
+    <div class="order-summary__sections">
+    <div class="order-summary__section order-summary__section--product-list">
+        <div class="order-summary__section__content">
+            <table class="product-table">
+                <caption class="visually-hidden">Shopping cart</caption>
+                <thead class="product-table__header">
+                <tr>
+                    <th scope="col">
+                        <span class="visually-hidden">Product image</span>
+                    </th>
+                    <th scope="col">
+                        <span class="visually-hidden">Description</span>
+                    </th>
+                    <th scope="col">
+                        <span class="visually-hidden">Quantity</span>
+                    </th>
+                    <th scope="col">
+                        <span class="visually-hidden">Price</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody data-order-summary-section="line-items">
+                @foreach (var item in JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")))
+                {
+                    <tr class="product">
+                        <td class="product__image">
+                            <div class="product-thumbnail ">
+                                <div class="product-thumbnail__wrapper">
+                                    <img class="product-thumbnail__image"
+                                         src="~/images/@item.Product.ProductImage.Name">
+                                </div>
+                                <span class="product-thumbnail__quantity" aria-hidden="true">
+                                    @Html.DisplayFor(m => item.Quantity)
+                                </span>
+                            </div>
+                        </td>
+                        <th class="product__description" scope="row">
+                            <span class="product__description__name order-summary__emphasis">
+                                @Html.DisplayFor(m => item.Product.Name)
+                            </span>
+                            <span
+                                class="product__description__variant order-summary__small-text">
+                                @Html.DisplayFor(m => item.ProductColor.Name) / @Html.DisplayFor(m => item.ProductSize.Name)
+                            </span>
                         </th>
-                        <th scope="col">
-                            <span class="visually-hidden">Price</span>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody class="total-line-table__tbody">
-                    <tr class="total-line total-line--subtotal">
-                        <th class="total-line__name" scope="row">Subtotal</th>
-                        <td class="total-line__price">
+                        <td class="product__quantity">
+                            <span class="visually-hidden">
+                                @Html.DisplayFor(m => item.Quantity)
+                            </span>
+                        </td>
+                        <td class="product__price">
                             <span class="order-summary__emphasis">
-                                $@(String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)))
-                            </span>
-                        </td>
-                    </tr>
-                    <tr class="total-line total-line--shipping">
-                        <th class="total-line__name" scope="row">
-                            <span>
-                                Shipping
-                            </span>
-                        </th>
-                        <td class="total-line__price">
-                            <span class="order-summary__small-text">
-                                @if (Context.Session.GetString("CheckoutInformation") != null && JsonConvert.DeserializeObject<CheckoutModel>(Context.Session.GetString("CheckoutInformation")).ShippingRate == 0)
+                                @if (@Context.Request.Query["lang"] == "ro")
                                 {
-                                    @Html.Raw("Free")
+                                    @Html.Raw($"{item.Product.DiscountedPrice:0.00} Lei")
                                 }
                                 else
                                 {
-                                    @if (Context.Session.GetString("CheckoutInformation") != null)
-                                    {
-                                        @Html.Raw("$" + String.Format("{0:0.00}", JsonConvert.DeserializeObject<CheckoutModel>(Context.Session.GetString("CheckoutInformation"))?.ShippingRate))
-                                    }
+                                    @Html.Raw("$" + $"{item.Product.DiscountedPrice:0.00}")
                                 }
                             </span>
                         </td>
                     </tr>
-                    </tbody>
-                    <tfoot class="total-line-table__footer">
-                    <tr class="total-line">
-                        <th class="total-line__name payment-due-label" scope="row">
-                            <span class="payment-due-label__total">Total</span>
-                            <span class="payment-due-label__taxes order-summary__small-text hidden"
-                                  data-checkout-taxes="">
-                                Including
-                                <span data-checkout-total-taxes-target="0">
-                                    $0.00
-                                </span> in taxes
-                            </span>
-                        </th>
-                        <td class="total-line__price payment-due">
-                            <span class="payment-due__currency">
-                                USD
-                            </span>
-                            <span class="payment-due__price">
-                                @if (Context.Session.GetString("CheckoutInformation") != null)
-                                {
-                                    @Html.Raw("$" + String.Format("{0:0.00}", (JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)) +
-                                                                              JsonConvert.DeserializeObject<CheckoutModel>(Context.Session.GetString("CheckoutInformation")).ShippingRate))
-                                }
-                                else
-                                {
-                                    @Html.Raw("$" + String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)))
-                                }
-                            </span>
-                        </td>
-                    </tr>
-                    </tfoot>
-                </table>
+                }
+                </tbody>
+            </table>
+            <div class="order-summary__scroll-indicator" aria-hidden="true" tabindex="-1">
+                Scroll for more items
+                <svg aria-hidden="true" focusable="false" class="icon-svg icon-svg--size-12">
+                    <use xlink:href="#down-arrow"></use>
+                </svg>
             </div>
         </div>
+    </div>
+    <div class="order-summary__section order-summary__section--total-lines"
+         data-order-summary-section="payment-lines">
+        <table class="total-line-table">
+            <caption class="visually-hidden">Cost summary</caption>
+            <thead>
+            <tr>
+                <th scope="col">
+                    <span class="visually-hidden">Description</span>
+                </th>
+                <th scope="col">
+                    <span class="visually-hidden">Price</span>
+                </th>
+            </tr>
+            </thead>
+            <tbody class="total-line-table__tbody">
+            <tr class="total-line total-line--subtotal">
+                <th class="total-line__name" scope="row">Subtotal</th>
+                <td class="total-line__price">
+                    <span class="order-summary__emphasis">
+                        @if (@Context.Request.Query["lang"] == "ro")
+                        {
+                            @(String.Format("{0:0.00} Lei", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)))
+                        }
+                        else
+                        {
+                            @(String.Format("{0:$0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)))
+                        }
+                    </span>
+                </td>
+            </tr>
+            <tr class="total-line total-line--shipping">
+                <th class="total-line__name" scope="row">
+                    <span>
+                        @if (@Context.Request.Query["lang"] == "ro")
+                        {
+                            @Html.Raw("Livrare")
+                        }
+                        else
+                        {
+                            @Html.Raw("Shipping")
+                        }
+                    </span>
+                </th>
+                <td class="total-line__price">
+                    <span class="order-summary__small-text">
+                        @if (Context.Session.GetString("CheckoutInformation") != null && JsonConvert.DeserializeObject<CheckoutModel>(Context.Session.GetString("CheckoutInformation")).ShippingRate == 0)
+                        {
+                            @if (@Context.Request.Query["lang"] == "ro")
+                            {
+                                @Html.Raw("Gratuit")
+                            }
+                            else
+                            {
+                                @Html.Raw("Free")
+                            }
+                        }
+                        else
+                        {
+                            @if (Context.Session.GetString("CheckoutInformation") != null)
+                            {
+                                @if (@Context.Request.Query["lang"] == "ro")
+                                {
+                                    @Html.Raw(String.Format("{0:0.00 Lei}", JsonConvert.DeserializeObject<CheckoutModel>(Context.Session.GetString("CheckoutInformation"))?.ShippingRate))
+                                }
+                                else
+                                {
+                                    @Html.Raw("$" + String.Format("{0:0.00}", JsonConvert.DeserializeObject<CheckoutModel>(Context.Session.GetString("CheckoutInformation"))?.ShippingRate))
+                                }
+                            }
+                        }
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot class="total-line-table__footer">
+            <tr class="total-line">
+                <th class="total-line__name payment-due-label" scope="row">
+                    <span class="payment-due-label__total">Total</span>
+                    <span class="payment-due-label__taxes order-summary__small-text hidden"
+                          data-checkout-taxes="">
+                        Including
+                        <span data-checkout-total-taxes-target="0">
+                            $0.00
+                        </span> in taxes
+                    </span>
+                </th>
+                <td class="total-line__price payment-due">
+                    <span class="payment-due__currency">
+                        @if (@Context.Request.Query["lang"] == "ro")
+                        {
+                            @Html.Raw("RON")
+                        }
+                        else
+                        {
+                            @Html.Raw("USD")
+                        }
+                    </span>
+                    <span class="payment-due__price">
+                        @if (Context.Session.GetString("CheckoutInformation") != null)
+                        {
+                            @if (@Context.Request.Query["lang"] == "ro")
+                            {
+                                @Html.Raw(String.Format("{0:0.00 Lei}", (JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)) +
+                                                                        JsonConvert.DeserializeObject<CheckoutModel>(Context.Session.GetString("CheckoutInformation")).ShippingRate))
+                            }
+                            else
+                            {
+                                @Html.Raw("$" + String.Format("{0:0.00}", (JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)) +
+                                                                          JsonConvert.DeserializeObject<CheckoutModel>(Context.Session.GetString("CheckoutInformation")).ShippingRate))
+                            }
+                        }
+                        else
+                        {
+                            @if (@Context.Request.Query["lang"] == "ro")
+                            {
+                                @Html.Raw(String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)))
+                            }
+                            else
+                            {
+                                @Html.Raw("$" + String.Format("{0:0.00}", JsonConvert.DeserializeObject<List<SessionCart>>(Context.Session.GetString("ShoppingSessionId")).Sum(s => s.Product.DiscountedPrice * s.Quantity)))
+                            }
+                        }
+                    </span>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    </div>
     </div>
     <div class="visually-hidden" data-order-summary-section="accessibility-live-region">
         <div aria-live="polite" aria-atomic="true" role="status">
@@ -392,18 +546,39 @@ else
                             <ul class="dropdown-menu " aria-labelledby="catalog">
                                 <li>
                                     <a id="catalog-sale" class="dropdown-item text-dark" href="/Collections/Sale" aria-current="">
-                                        Sale
+                                        @if (@Context.Request.Query["lang"] == "ro")
+                                        {
+                                            @Html.Raw("Reduceri")
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("Sale")
+                                        }
                                     </a>
                                 </li>
                                 <div class="dropdown-divider"></div>
                                 <li>
                                     <a id="catalog-men" class="dropdown-item text-dark" href="/Collections/Men" aria-current="">
-                                        Men
+                                        @if (@Context.Request.Query["lang"] == "ro")
+                                        {
+                                            @Html.Raw("Barbati")
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("Men")
+                                        }
                                     </a>
                                 </li>
                                 <li>
                                     <a id="catalog-women" class="dropdown-item text-dark" href="/Collections/Women" aria-current="">
-                                        Women
+                                        @if (@Context.Request.Query["lang"] == "ro")
+                                        {
+                                            @Html.Raw("Femei")
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("Women")
+                                        }
                                     </a>
                                 </li>
                                 <li>
@@ -414,7 +589,14 @@ else
                                 <div class="dropdown-divider"></div>
                                 <li>
                                     <a id="catalog-all" class="dropdown-item text-dark" href="/Collections/AllProducts" aria-current="">
-                                        All products
+                                        @if (@Context.Request.Query["lang"] == "ro")
+                                        {
+                                            @Html.Raw("Toate produsele")
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("All products")
+                                        }
                                     </a>
                                 </li>
                             </ul>

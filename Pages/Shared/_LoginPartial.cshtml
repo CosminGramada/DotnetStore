@@ -8,7 +8,14 @@
 {
     <li class="nav-item d-none d-lg-block">
         <p id="user-name" class="text-center" style="white-space: nowrap; display: contents;">
-            Hi,
+            @if (@Context.Request.Query["lang"] == "ro")
+            {
+                @Html.Raw("Salut,")
+            }
+            else
+            {
+                @Html.Raw("Hi,")
+            }
             <strong>@UserManager.FindByNameAsync(User.Identity.Name).Result.FirstName</strong>
         </p>
     </li>
@@ -20,7 +27,14 @@
             search
         </span>
         <span>
-            Search
+            @if (@Context.Request.Query["lang"] == "ro")
+            {
+                @Html.Raw("Cautare")
+            }
+            else
+            {
+                @Html.Raw("Search")
+            }
         </span>
     </a>
     <div class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="search-nav-link"
@@ -43,7 +57,14 @@
                 account_circle
             </span>
             <span>
-                Account
+                @if (@Context.Request.Query["lang"] == "ro")
+                {
+                    @Html.Raw("Cont")
+                }
+                else
+                {
+                    @Html.Raw("Account")
+                }
             </span>
         </a>
     </li>
@@ -52,7 +73,14 @@
         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new {area = ""})" method="post">
             <button type="submit" class="material-icons-outlined nav-link btn btn-link text-dark" style="font-size: 24px;">logout</button>
             <span>
-                Logout
+                @if (@Context.Request.Query["lang"] == "ro")
+                {
+                    @Html.Raw("Iesire")
+                }
+                else
+                {
+                    @Html.Raw("Logout")
+                }
             </span>
         </form>
     </li>
@@ -61,7 +89,16 @@ else
 {
     <partial name="_CartPartial"/>
     <li id="register-nav-item" class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">
+            @if (@Context.Request.Query["lang"] == "ro")
+            {
+                @Html.Raw("Inregistrare")
+            }
+            else
+            {
+                @Html.Raw("Register")
+            }
+        </a>
     </li>
     <li id="login-nav-item" class="nav-item">
         <a class="nav-link d-flex text-dark" asp-area="Identity" asp-page="/Account/Login">
@@ -69,7 +106,14 @@ else
                 login
             </span>
             <span>
-                Login
+                @if (@Context.Request.Query["lang"] == "ro")
+                {
+                    @Html.Raw("Autentificare")
+                }
+                else
+                {
+                    @Html.Raw("Login")
+                }
             </span>
         </a>
     </li>
