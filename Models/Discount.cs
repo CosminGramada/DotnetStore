@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
+using DotnetStore.Data;
 
 namespace DotnetStore.Models;
 
@@ -46,7 +48,7 @@ public class Discount: BaseEntity, IValidatableObject
         {
             yield return
                 new ValidationResult(
-                    "End date cannot be in the past.", 
+                    "End date cannot be before the Start date.", 
                     new[] { nameof(EndDate)});
         }
 
@@ -58,7 +60,7 @@ public class Discount: BaseEntity, IValidatableObject
                     new[] { nameof(Name)});
         }
         
-        if (Description?.Length > 120)
+        if (Description?.Length > 500)
         {
             yield return
                 new ValidationResult(
@@ -82,12 +84,46 @@ public class Discount: BaseEntity, IValidatableObject
                     new[] { nameof(Percent)});
         }
 
-        if (DiscountType.Name == "Order" && string.IsNullOrWhiteSpace(Code))
+        var context = (ApplicationDbContext) validationContext.GetService(typeof(ApplicationDbContext));
+        var discountType = context.DiscountTypes.Single(d => d.Id == DiscountTypeId);
+
+        if (discountType.Name == "Order")
         {
-            yield return
-                new ValidationResult(
-                    "The Code field is required when the Discount Type selected is Order.", 
-                    new[] { nameof(Code)});
+            if (string.IsNullOrWhiteSpace(Code))
+            {
+                yield return
+                    new ValidationResult(
+                        "The Code field is required when the Discount Type selected is Order.",
+                        new[] {nameof(Code)});
+            }
+            
+            Regex rgx = new Regex("[^A-Za-z0-9]");
+            var hasSpecialChars = rgx.IsMatch(Code);
+            if (!hasSpecialChars)
+            {
+                yield return
+                    new ValidationResult(
+                        "Code can contain only alpha-numeric characters.", 
+                        new[] { nameof(Code)});
+            }
+        
+            if (Code.Length < 6 || Code.Length > 12)
+            {
+                yield return
+                    new ValidationResult(
+                        "Code should be between 6 and 12 characters long.", 
+                        new[] { nameof(Code)});
+            }
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(Code))
+            {
+                yield return
+                    new ValidationResult(
+                        "Code should be used only for discounts of type Order", 
+                        new[] { nameof(Code)});
+            }
         }
     }
 }

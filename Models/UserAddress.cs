@@ -47,5 +47,5 @@ public class UserAddress: BaseEntity
     public virtual Country? Country { get; set; }
     
     [BindNever]
-    public virtual ApplicationUser? User { get; set; }
+    public ApplicationUser? User { get; set; }
 }
