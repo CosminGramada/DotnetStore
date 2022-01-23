@@ -20,7 +20,8 @@ namespace DotnetStore.Pages.Admin.Discounts
             return Page();
         }
 
-        [BindProperty] public Discount Discount { get; set; }
+        [BindProperty] 
+        public Discount Discount { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -28,9 +29,7 @@ namespace DotnetStore.Pages.Admin.Discounts
             Discount.DiscountType = _context.DiscountTypes.Single(s => s.Id == Discount.DiscountTypeId);
             if (!ModelState.IsValid)
             {
-                // var errors = ModelState.Select(x => x.Value.Errors)
-                //     .Where(y=>y.Count>0)
-                //     .ToList();
+                ViewData["DiscountTypeId"] = new SelectList(_context.DiscountTypes, "Id", "Name");
                 return Page();
             }
 
